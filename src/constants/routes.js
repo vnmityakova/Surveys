@@ -1,9 +1,8 @@
-// import { getHost } from '../utils/hostenv';
-// const { host, protocol } = getHost();
 export const APP_ROOT = '/surveys';
-export const CREATE_SURVEY = `${APP_ROOT}/create`;
+export const EDIT_SURVEY_WITH_ID = `${APP_ROOT}/edit/:id`;
+export const EDIT_SURVEY = `${APP_ROOT}/edit`;
+export const SURVEY_LIST = `${APP_ROOT}/surveyList`;
 export const LOGIN_PATH = `${APP_ROOT}/login`;
-export const START_PATH = `${APP_ROOT}/login`;
 export const ABOUT_PATH = `${APP_ROOT}/about`;
 
 export const API = {

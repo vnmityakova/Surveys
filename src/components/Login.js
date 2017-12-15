@@ -2,8 +2,10 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import type { State, Dispatch } from '../types';
 import { setUser, logout } from "../actions/survey";
+import { ABOUT_PATH, SURVEY_LIST } from '../constants/routes';
 
 type OwnProps = {
   user: Object,
@@ -28,6 +30,10 @@ class Login extends Component {
       : <button onClick={this.props.setUser}>Log In</button>;
     return (
       <div>
+        <div>
+          <Link to={`${ABOUT_PATH}`}>About</Link> |
+          <Link to={`${SURVEY_LIST}`}>Survey List</Link>
+        </div>
         {button}
       </div>
     );

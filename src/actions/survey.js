@@ -25,9 +25,29 @@ export const getQuestions = (): ThunkAction => (dispatch: Dispatch) => {
   }
 };
 
-export const addNewQuestion = (question): ThunkAction => (dispatch: Dispatch) => {
+export const getQuestionsById = (surveyId): ThunkAction => (dispatch: Dispatch) => {
   try {
-    const itemsRef = firebase.database().ref('items');
+    const itemsRef = firebase.database().ref(`/surveyList/${surveyId}/questionList`);
+    itemsRef.on('value', (snapshot) => {
+      const questions = [];
+      const items = snapshot.val();
+      for (const item in items) { // eslint-disable-line
+        questions.push({
+          id: item,
+          question: items[item].question,
+          answer: items[item].answer,
+        });
+      }
+      dispatch({ type: '@@SURVEY/GET_QUESTIONS_SUCCESS', questions });
+    });
+  } catch (e) {
+    dispatch({ type: '@@SURVEY/GET_QUESTIONS_FAIL' });
+  }
+};
+
+export const addNewQuestion = (question, surveyId): ThunkAction => (dispatch: Dispatch) => {
+  try {
+    const itemsRef = firebase.database().ref(`/surveyList/${surveyId}/questionList`);
     itemsRef.push(question);
     dispatch({ type: '@@SURVEY/ADD_QUESTION_SUCCESS' });
   } catch (e) {
@@ -42,6 +62,45 @@ export const removeQuestion = (id): ThunkAction => (dispatch: Dispatch) => {
     dispatch({ type: '@@SURVEY/REMOVE_QUESTION_SUCCESS' });
   } catch (e) {
     dispatch({ type: '@@SURVEY/REMOVE_QUESTION_FAIL' });
+  }
+};
+
+export const createSurvey = (): ThunkAction => (dispatch: Dispatch) => {
+  try {
+    const itemsRef = firebase.database().ref('surveyList');
+    const params = {
+      title: '',
+    };
+    const newEl = itemsRef.push({
+      params,
+    });
+    const key = newEl.key;
+    dispatch({ type: '@@SURVEY/ADD_SURVEY_SUCCESS', newId: key });
+  } catch (e) {
+    dispatch({ type: '@@SURVEY/ADD_SURVEY_FAIL' });
+  }
+};
+
+export const clearNewSurveyId = (): ThunkAction => (dispatch: Dispatch) => {
+  dispatch({ type: '@@SURVEY/CLEAR_NEW_SURVEY_ID' });
+};
+
+export const getSurveyList = (): ThunkAction => (dispatch: Dispatch) => {
+  try {
+    const itemsRef = firebase.database().ref('surveyList');
+    itemsRef.on('value', (snapshot) => {
+      const surveys = [];
+      const items = snapshot.val();
+      for (const item in items) { // eslint-disable-line
+        surveys.push({
+          id: item,
+          title: items[item].title,
+        });
+      }
+      dispatch({ type: '@@SURVEY/GET_SURVEYS_SUCCESS', surveys });
+    });
+  } catch (e) {
+    dispatch({ type: '@@SURVEY/GET_SURVEYS_FAIL' });
   }
 };
 

@@ -9,6 +9,8 @@ const initialState = {
   questions: [],
   user: null,
   isAuthChecked: false,
+  surveyList: [],
+  newSurveyId: '',
 };
 
 const reducer = (state: LayoutState = initialState, action: Action): LayoutState => {
@@ -38,6 +40,21 @@ const reducer = (state: LayoutState = initialState, action: Action): LayoutState
       return {
         ...state,
         isAuthChecked: true,
+      };
+    case '@@SURVEY/GET_SURVEYS_SUCCESS':
+      return {
+        ...state,
+        surveyList: action.surveys,
+      };
+    case '@@SURVEY/ADD_SURVEY_SUCCESS':
+      return {
+        ...state,
+        newSurveyId: action.newId,
+      };
+    case '@@SURVEY/CLEAR_NEW_SURVEY_ID':
+      return {
+        ...state,
+        newSurveyId: '',
       };
     default:
       return state;

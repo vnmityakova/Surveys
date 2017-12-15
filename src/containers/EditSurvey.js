@@ -1,12 +1,14 @@
 // @flow
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect, Connector } from 'react-redux';
-import { getQuestions, addNewQuestion, removeQuestion } from '../actions/survey';
+import { addNewQuestion, getQuestionsById, clearNewSurveyId } from '../actions/survey';
 import type { Dispatch } from '../types/index';
 import Question from '../components/Question';
 
 type OwnProps = {
   questions: [],
+  location: Match;
 };
 
 type OwnState = {
@@ -17,7 +19,8 @@ type OwnState = {
 type DispatchProps = {
   getQuestions: Function,
   addNewQuestion: Function,
-  removeQuestion: Function,
+  clearNewSurveyId: Function,
+  // removeQuestion: Function,
 };
 
 type Props = OwnProps & DispatchProps;
@@ -27,19 +30,26 @@ class CreateSurvey extends Component {
   state: OwnState = {
     question: '',
     answer: '',
+    surveyName: 'Опрос без названия',
+    surveyId: this.props.match.params.id,
   };
-
   componentWillMount() {
-    this.props.getQuestions();
+    this.props.getQuestions(this.state.surveyId);
+    this.props.clearNewSurveyId();
   }
 
   render() {
-    const defaulSurveyName = 'Опрос без названия';
     return (
       <div className="container">
 
         <div>
-          <input type="text" value={defaulSurveyName} />
+          <input
+            type="text"
+            name="surveyName"
+            placeholder="Название опроса"
+            value={this.state.surveyName}
+            onChange={this.handleChange}
+          />
         </div>
 
         <section className="add-item">
@@ -53,14 +63,15 @@ class CreateSurvey extends Component {
             />
             <input
               type="text"
-              name="answer"git init
+              name="answer"
               placeholder="Answer?"
               onChange={this.handleChange}
               value={this.state.answer}
             />
-            <button onChange={this.handleChange}>Add</button>
+            <button>Add</button>
           </form>
         </section>
+
         <section className="display-item">
           <div className="wrapper">
             <ul>
@@ -93,7 +104,7 @@ class CreateSurvey extends Component {
       answer: '',
       question: '',
     });
-    this.props.addNewQuestion(item);
+    this.props.addNewQuestion(item, this.state.surveyId);
   };
 }
 
@@ -102,11 +113,12 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  getQuestions: () => dispatch(getQuestions()),
-  addNewQuestion: question => dispatch(addNewQuestion(question)),
-  removeQuestion: id => dispatch(removeQuestion(id)),
+  getQuestions: surveyId => dispatch(getQuestionsById(surveyId)),
+  addNewQuestion: (question, surveyId) => dispatch(addNewQuestion(question, surveyId)),
+  clearNewSurveyId: () => dispatch(clearNewSurveyId()),
+  // removeQuestion: id => dispatch(removeQuestion(id)),
 });
 
 const connector: Connector<{}, Props> = connect(mapStateToProps, mapDispatchToProps);
 
-export default connector(CreateSurvey);
+export default withRouter(connector(CreateSurvey));

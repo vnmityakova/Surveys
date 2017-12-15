@@ -7,18 +7,19 @@ import type { Connector } from 'react-redux';
 import NotFound from '../components/NotFound';
 import {
   APP_ROOT,
-  CREATE_SURVEY,
   ABOUT_PATH,
+  SURVEY_LIST,
+  EDIT_SURVEY_WITH_ID,
 } from '../constants/routes';
 import type { State, Dispatch } from '../types';
-
 import type {
   LayoutState,
 } from '../types';
-import CreateSurvey from './CreateSurvey';
+import EditSurvey from './EditSurvey';
 import Login from '../components/Login';
 import { reloginUser } from "../actions/survey";
 import About from '../components/About';
+import SurveyList from './SurveyList';
 
 type Props = {};
 
@@ -49,18 +50,26 @@ class Layout extends Component {
             path={APP_ROOT}
             render={() => {
               return (
-                this.props.user
-                  ? <Redirect to={{ pathname: CREATE_SURVEY }} />
-                  : <Redirect to={{ pathname: ABOUT_PATH }} />
+                <Redirect to={{ pathname: ABOUT_PATH }} />
               );
             }}
           />
           {this.props.isAuthChecked && <Route
-            path={CREATE_SURVEY}
+            path={EDIT_SURVEY_WITH_ID}
             render={() => {
               return (
                 this.props.user
-                  ? <CreateSurvey />
+                  ? <EditSurvey />
+                  : <Redirect to={{ pathname: ABOUT_PATH }} />
+              );
+            }}
+          />}
+          {this.props.isAuthChecked && <Route
+            path={SURVEY_LIST}
+            render={() => {
+              return (
+                this.props.user
+                  ? <SurveyList />
                   : <Redirect to={{ pathname: ABOUT_PATH }} />
               );
             }}

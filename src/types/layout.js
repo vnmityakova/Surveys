@@ -12,6 +12,8 @@ type LayoutState = {
   questions: Array;
   user: ?Object,
   isAuthChecked: boolean,
+  surveyList: Array;
+  newSurveyId: String,
 };
 
 type LayoutActions =
