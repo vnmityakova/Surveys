@@ -1,11 +1,10 @@
 // @flow
-/* eslint-disable */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
+import { Button } from 'react-toolbox/lib/button';
 import type { State, Dispatch } from '../types';
-import { setUser, logout } from "../actions/survey";
-import { ABOUT_PATH, SURVEY_LIST } from '../constants/routes';
+import { setUser, logout } from '../actions/survey';
 
 type OwnProps = {
   user: Object,
@@ -17,23 +16,41 @@ type DispatchProps = {
 
 type Props = OwnProps & DispatchProps;
 
-class Login extends Component {
+class Login extends Component { // eslint-disable-line
   props: Props;
 
-  componentWillReceiveProps(nextProps: Object) {
-
-  }
-
   render() {
-    const button = this.props.user
-      ? <button onClick={this.props.logout}>Log Out</button>
-      : <button onClick={this.props.setUser}>Log In</button>;
+    const {
+      user,
+    } = this.props;
+    const iconLang = (<div>
+      { user && user.email }
+      <i className="material-icons arrow">keyboard_arrow_down</i>
+    </div>);
+
+    const userMenu = (
+      <IconMenu
+        icon={iconLang}
+        position="topRight"
+        menuRipple={false}
+        iconRipple={false}
+        className="userButton"
+      >
+        <MenuItem
+          value="Logout"
+          icon="exit_to_app"
+          onClick={this.props.logout}
+          caption="Выйти"
+        />
+      </IconMenu>
+    );
+
+    const button = user
+      ? userMenu
+      : <Button label="Log In" raised onClick={this.props.setUser} />;
+
     return (
-      <div>
-        <div>
-          <Link to={`${ABOUT_PATH}`}>About</Link> |
-          <Link to={`${SURVEY_LIST}`}>Survey List</Link>
-        </div>
+      <div className="authMenu">
         {button}
       </div>
     );

@@ -36,22 +36,17 @@ const modules = {
       include: [path.resolve(appDir, 'src')],
     }, {
       test: /\.(scss|css)$/,
-      exclude: path.resolve(appDir, 'node_modules/react-toolbox'),
+      exclude: [path.resolve(appDir, 'node_modules/react-toolbox'), path.resolve(appDir, 'node_modules/material-design-icons/iconfont')],
       use: [
         {
           loader: 'style-loader',
           options: { sourceMap: true },
         }, {
           loader: 'css-loader',
-          options: {
-            importLoaders: 1,
-            import: false,
-            sourceMap: true,
-          },
-        }, {
+        }, /* {
           loader: 'postcss-loader',
           options: { sourceMap: true },
-        }, {
+        },*/ {
           loader: 'sass-loader',
           options: {
             sourceMap: true,
@@ -64,6 +59,7 @@ const modules = {
     }, {
       test: /\.(css)$/,
       include: path.resolve(appDir, 'node_modules/react-toolbox'),
+      exclude: [path.resolve(appDir, 'node_modules/material-design-icons/iconfont')],
       use: [
         {
           loader: 'style-loader',
@@ -77,10 +73,10 @@ const modules = {
             localIdentName: '[name]--[local]',
           },
         },
-        {
+        /* {
           loader: 'postcss-loader',
           options: { sourceMap: true },
-        }, {
+        }, */ {
           loader: 'sass-loader',
           options: {
             sourceMap: true,
@@ -139,7 +135,7 @@ const devtool = 'inline-source-map';
 const entry = {
   dealer: [
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://0.0.0.0:5050',
+    'webpack-dev-server/client?http://0.0.0.0:8888',
     'webpack/hot/only-dev-server',
     'whatwg-fetch',
     'babel-polyfill',

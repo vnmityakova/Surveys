@@ -1,0 +1,80 @@
+// @import "/node_modules/material-design-icons/iconfont/material-icons.css"; // TODO как добавить этот файл через css loader? чтоб 404 не было
+// @import "~font-awesome/scss/font-awesome";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+
+body {
+    /*background-color: #1b6d85;*/
+}
+
+input[type="text"] {
+  height: 36px;
+}
+
+.container {
+  width: 1170px;
+  margin: 0 auto;
+}
+
+.header {
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.grid-1-2 {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 40px;
+}
+
+.authMenu {
+  text-align: right;
+
+  .userButton button {
+    width: 180px;
+  }
+
+  .arrow {
+    position: relative;
+    top: 8px;
+  }
+
+  [data-react-toolbox="menu"] {
+    top: 35px;
+  }
+}
+
+.headerMenu {
+  .item {
+    padding: 0 10px;
+
+    a {
+      padding-top: 10px;
+      display: inline-block;
+    }
+  }
+
+}
+
+.surveyList {
+  padding-top: 20px;
+}
+
+.editSurvey {
+  .surveyName {
+    padding-bottom: 20px;
+    font-size: 18px;
+
+    input[type="text"] {
+      border: 1px solid transparent;
+
+      &:hover {
+        border: 1px solid #ddd;
+      }
+    }
+  }
+
+
+}

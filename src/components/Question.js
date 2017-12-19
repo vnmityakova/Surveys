@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { Button } from 'react-toolbox/lib/button';
 
 type Props = {
   item: Object,
@@ -18,7 +19,11 @@ const Question = (props: Props) => {
     <li key={item.id}>
       <h3>{item.question}</h3>
       <p>answer: {item.answer}</p>
-      <button onClick={handleRemove}>Remove</button>
+      <Button
+        label="Remove"
+        raised
+        onClick={handleRemove}
+      />
     </li>
   );
 };

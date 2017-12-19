@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { Button } from 'react-toolbox/lib/button';
 import { connect, Connector } from 'react-redux';
 import { addNewQuestion, getQuestionsById, clearNewSurveyId } from '../actions/survey';
 import type { Dispatch } from '../types/index';
@@ -40,9 +41,9 @@ class CreateSurvey extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="editSurvey">
 
-        <div>
+        <div className="surveyName">
           <input
             type="text"
             name="surveyName"
@@ -68,7 +69,10 @@ class CreateSurvey extends Component {
               onChange={this.handleChange}
               value={this.state.answer}
             />
-            <button>Add</button>
+            <Button
+              label="Add"
+              raised
+            />
           </form>
         </section>
 

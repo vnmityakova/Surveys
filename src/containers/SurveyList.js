@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import { Button } from 'react-toolbox/lib/button';
 import { withRouter } from 'react-router-dom';
 import { connect, Connector } from 'react-redux';
 import type { Dispatch } from '../types/index';
@@ -33,12 +34,17 @@ class SurveyList extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="surveysContainer">
         <div>
-          <button onClick={this.createSurveyHandler}>Создать опрос</button>
+          <Button
+            label="Создать опрос"
+            raised
+            primary
+            onClick={this.createSurveyHandler}
+          />
         </div>
 
-        <div>
+        <div className="surveyList">
           Список опросов:
           <ul>
             {this.props.surveyList.map((item) => {

@@ -14,12 +14,12 @@ const Survey = (props: Props) => {
 
   return (
     <li key={item.id}>
-      <h3>
+      <p>
         <Link to={`${EDIT_SURVEY}/${item.id}`}>
           {item.id}
         </Link>
-        {item.id} {item.title}
-      </h3>
+        {item.title}
+      </p>
     </li>
   );
 };

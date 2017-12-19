@@ -20,6 +20,9 @@ import Login from '../components/Login';
 import { reloginUser } from "../actions/survey";
 import About from '../components/About';
 import SurveyList from './SurveyList';
+import '../assets/css/bootstrap.css';
+import '../assets/css/app.scss';
+import HeaderMenu from '../components/HeaderMenu';
 
 type Props = {};
 
@@ -43,47 +46,54 @@ class Layout extends Component {
   render() {
     return (
       <div className="app">
-        <Login />
-        <Switch>
-          <Route
-            exact
-            path={APP_ROOT}
-            render={() => {
-              return (
-                <Redirect to={{ pathname: ABOUT_PATH }} />
-              );
-            }}
-          />
-          {this.props.isAuthChecked && <Route
-            path={EDIT_SURVEY_WITH_ID}
-            render={() => {
-              return (
-                this.props.user
-                  ? <EditSurvey />
-                  : <Redirect to={{ pathname: ABOUT_PATH }} />
-              );
-            }}
-          />}
-          {this.props.isAuthChecked && <Route
-            path={SURVEY_LIST}
-            render={() => {
-              return (
-                this.props.user
-                  ? <SurveyList />
-                  : <Redirect to={{ pathname: ABOUT_PATH }} />
-              );
-            }}
-          />}
-          {<Route
-            path={ABOUT_PATH}
-            render={() => {
-              return (
+        <div className="header">
+          <div className="container">
+            <div className="grid-1-2">
+              <HeaderMenu/>
+              <Login />
+            </div>
+          </div>
+        </div>
+        <div className="container main">
+          <Switch>
+            <Route
+              exact
+              path={APP_ROOT}
+              render={() => {
+                return (
+                  <Redirect to={{pathname: ABOUT_PATH}}/>
+                );
+              }}
+            />
+            {this.props.isAuthChecked && <Route
+              path={EDIT_SURVEY_WITH_ID}
+              render={() => {
+                return (
+                  this.props.user ? <EditSurvey /> :
+                    <Redirect to={{pathname: ABOUT_PATH}}/>
+                );
+              }}
+            />}
+            {this.props.isAuthChecked && <Route
+              path={SURVEY_LIST}
+              render={() => {
+                return (
+                  this.props.user ? <SurveyList /> :
+                    <Redirect to={{pathname: ABOUT_PATH}}/>
+                );
+              }}
+            />}
+            {<Route
+              path={ABOUT_PATH}
+              render={() => {
+                return (
                   <About />
-              );
-            }}
-          />}
-          {/*<Route component={NotFound} />*/}
-        </Switch>
+                );
+              }}
+            />}
+            {/*<Route component={NotFound} />*/}
+          </Switch>
+        </div>
       </div>
     );
   }
