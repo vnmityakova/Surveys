@@ -20,7 +20,7 @@ import Login from '../components/Login';
 import { reloginUser } from "../actions/survey";
 import About from '../components/About';
 import SurveyList from './SurveyList';
-import '../assets/css/bootstrap.css';
+// import '../assets/css/bootstrap.css';
 import '../assets/css/app.scss';
 import HeaderMenu from '../components/HeaderMenu';
 

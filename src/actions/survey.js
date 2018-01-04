@@ -1,4 +1,5 @@
 // @flow
+import { forEach } from 'lodash';
 import type {
   Dispatch,
   ThunkAction,
@@ -16,6 +17,7 @@ export const getQuestions = (): ThunkAction => (dispatch: Dispatch) => {
           id: item,
           question: items[item].question,
           answer: items[item].answer,
+          questionType: items[item].questionType,
         });
       }
       dispatch({ type: '@@SURVEY/GET_QUESTIONS_SUCCESS', questions });
@@ -36,6 +38,7 @@ export const getQuestionsById = (surveyId): ThunkAction => (dispatch: Dispatch) 
           id: item,
           question: items[item].question,
           answer: items[item].answer,
+          questionType: items[item].questionType,
         });
       }
       dispatch({ type: '@@SURVEY/GET_QUESTIONS_SUCCESS', questions });
@@ -69,7 +72,7 @@ export const createSurvey = (): ThunkAction => (dispatch: Dispatch) => {
   try {
     const itemsRef = firebase.database().ref('surveyList');
     const params = {
-      title: '',
+      title: 'Опрос без названия',
     };
     const newEl = itemsRef.push({
       params,
@@ -91,12 +94,12 @@ export const getSurveyList = (): ThunkAction => (dispatch: Dispatch) => {
     itemsRef.on('value', (snapshot) => {
       const surveys = [];
       const items = snapshot.val();
-      for (const item in items) { // eslint-disable-line
+      forEach (items, (item, id) => { // eslint-disable-line
         surveys.push({
-          id: item,
-          title: items[item].title,
+          id,
+          title: item.params.title,
         });
-      }
+      });
       dispatch({ type: '@@SURVEY/GET_SURVEYS_SUCCESS', surveys });
     });
   } catch (e) {

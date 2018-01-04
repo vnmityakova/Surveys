@@ -2,13 +2,37 @@
 // @import "~font-awesome/scss/font-awesome";
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
-
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
 body {
-    /*background-color: #1b6d85;*/
+  margin: 0;
+  font-size: 14px;
+}
+
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+a:hover,
+a:focus {
+  color: #23527c;
+  text-decoration: underline;
+}
+a:focus {
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
 }
 
 input[type="text"] {
   height: 36px;
+  padding: 0 5px;
+}
+
+.top10 {
+  margin-top: 10px;
 }
 
 .container {
@@ -62,19 +86,64 @@ input[type="text"] {
   padding-top: 20px;
 }
 
+.hoverInput {
+  border: 1px solid transparent;
+  background-color: transparent;
+
+  &:hover {
+    border: 1px solid #ddd;
+  }
+}
+
 .editSurvey {
   .surveyName {
     padding-bottom: 20px;
-    font-size: 18px;
 
     input[type="text"] {
-      border: 1px solid transparent;
-
-      &:hover {
-        border: 1px solid #ddd;
-      }
+      font-size: 18px;
     }
   }
 
+  .questionTypesSelect {
+    width: 250px;
+  }
+
+}
+
+.displayItem {
+  ul {
+    padding-left: 0;
+    list-style: none;
+  }
+}
+
+.question, .addItem {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.addItem {
+  background-color: #e0f9fe;
+}
+
+.questionText {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.checkboxQuestion {
+  .theme--check {
+    margin-top: 9px;
+  }
+  .theme--field {
+    display: inline-block;
+  }
+  input[type="text"] {
+    margin-left: 5px;
+  }
+  .addItemButton {
+    min-width: 50px;
+  }
 
 }

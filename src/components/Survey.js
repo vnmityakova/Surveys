@@ -16,9 +16,8 @@ const Survey = (props: Props) => {
     <li key={item.id}>
       <p>
         <Link to={`${EDIT_SURVEY}/${item.id}`}>
-          {item.id}
+          {item.title}
         </Link>
-        {item.title}
       </p>
     </li>
   );
