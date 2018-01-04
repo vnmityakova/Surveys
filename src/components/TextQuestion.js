@@ -22,9 +22,10 @@ class TextQuestion extends Component {
         <input
           type="text"
           name="answer"
-          placeholder="Answer?"
+          placeholder=""
           onChange={this.handleChange}
           value={this.state.answer}
+          disabled
         />
         <br />
         <Button className="top10" label="Добавить вопрос" raised onClick={this.handleAddQuestion} />

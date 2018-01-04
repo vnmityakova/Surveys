@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import TextQuestion from './TextQuestion';
 import RadioQuestion from './RadioQuestion';
 import CheckboxQuestion from './CheckboxQuestion';
+import { questionWithItems } from './questionWithItems';
 
 type Props = {
   selectedQuestionType: string,
@@ -18,9 +19,11 @@ class QuestionConstructor extends Component {
     if (selectedQuestionType === 'text') {
       el = <TextQuestion selectedQuestionType={selectedQuestionType} addQuestionAnswerItem={this.props.addQuestionAnswerItem} />;
     } else if (selectedQuestionType === 'radio') {
-      el = <RadioQuestion selectedQuestionType={selectedQuestionType} addQuestionAnswerItem={this.props.addQuestionAnswerItem} />;
+      const RadioWithItems = questionWithItems(RadioQuestion, selectedQuestionType, this.props.addQuestionAnswerItem);
+      el = <RadioWithItems />;
     } else if (selectedQuestionType === 'checkbox') {
-      el = <CheckboxQuestion selectedQuestionType={selectedQuestionType} addQuestionAnswerItem={this.props.addQuestionAnswerItem} />;
+      const CheckboxWithItems = questionWithItems(CheckboxQuestion, selectedQuestionType, this.props.addQuestionAnswerItem);
+      el = <CheckboxWithItems />;
     }
     return <div className="top10">{el}</div>;
   }
