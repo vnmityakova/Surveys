@@ -133,7 +133,7 @@ const plugins = [
 
 const devtool = 'inline-source-map';
 const entry = {
-  dealer: [
+  survey: [
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://0.0.0.0:8888',
     'webpack/hot/only-dev-server',

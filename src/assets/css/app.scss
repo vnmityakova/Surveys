@@ -136,14 +136,22 @@ input[type="text"] {
   .theme--check {
     margin-top: 9px;
   }
-  .theme--field {
-    display: inline-block;
+}
+
+.radioQuestion {
+  .theme--radio {
+    margin-top: 9px;
   }
+}
+
+.radioQuestion, .checkboxQuestion {
   input[type="text"] {
     margin-left: 5px;
   }
   .addItemButton {
     min-width: 50px;
   }
-
+  .theme--field {
+    display: inline-block;
+  }
 }

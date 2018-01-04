@@ -1,11 +1,10 @@
 // @flow
 import React, { Component } from 'react';
 import { Button } from 'react-toolbox/lib/button';
-import { map, clone, remove } from 'lodash';
+import { clone, map, remove, sortBy, last } from 'lodash';
 import CheckboxItem from './CheckboxItem';
 
 type Props = {
-  // selectedQuestionType: string,
   addQuestionAnswerItem: Function,
 }
 
@@ -15,19 +14,24 @@ type OwnState = {
 
 class CheckboxQuestion extends Component {
   props: Props;
-  state: OwnState = {
+  defaultState: OwnState = {
     answerItems: [
       {
         id: 0,
-        text: 'вариант ответа',
+        text: 'вариант ответа1',
+      },
+      {
+        id: 1,
+        text: 'вариант ответа2',
       },
     ],
   };
+  state: OwnState = this.defaultState;
 
   render() {
     const { answerItems } = this.state;
     const checkboxes = map(answerItems, (item) => {
-      const isRemovable = answerItems.length > 1;
+      const isRemovable = answerItems.length > 2;
       return (
         <CheckboxItem
           id={item.id}
@@ -49,8 +53,9 @@ class CheckboxQuestion extends Component {
 
   handleAddAnswerItem = () => {
     const newAnswerItems = clone(this.state.answerItems);
+    sortBy(newAnswerItems, 'id');
     newAnswerItems.push({
-      id: newAnswerItems.length,
+      id: last(newAnswerItems).id + 1,
       text: 'вариант ответа',
     });
     this.setState({
@@ -70,14 +75,7 @@ class CheckboxQuestion extends Component {
       questionType: 'checkbox',
     };
     this.props.addQuestionAnswerItem(item);
-    this.setState({
-      answerItems: [
-        {
-          id: 0,
-          text: 'вариант ответа',
-        },
-      ],
-    });
+    this.setState(this.defaultState);
   };
 
   changeAnswer = (id, value) => {

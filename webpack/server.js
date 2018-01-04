@@ -9,7 +9,7 @@ const express = require('express');
 const port = 8888 || process.env.PORT;
 const app = express();
 
-app.use('/dealer', express.static(path.join(__dirname, '/../../web/src/main/webapp')));
+app.use('/survey', express.static(path.join(__dirname, '/../../web/src/main/webapp')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../../web/src/main/webapp/index.html'));
 });

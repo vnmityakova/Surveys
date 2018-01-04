@@ -11,14 +11,14 @@ const imagesDir = 'img/';
 module.exports = {
   devtool: 'cheap-module-source-map',
   entry: {
-    dealer: [
+    survey: [
       'whatwg-fetch',
       path.join(appDir, 'src', 'index'),
     ],
   },
   output: {
     path: buildDir,
-    publicPath: '/dealer/',
+    publicPath: '/survey/',
     filename: '[name].[chunkhash].js',
   },
   plugins: [
