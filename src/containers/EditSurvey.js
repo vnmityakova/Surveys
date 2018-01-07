@@ -8,8 +8,8 @@ import { Button } from 'react-toolbox/lib/button';
 import { connect, Connector } from 'react-redux';
 import { addNewQuestion, getQuestionsById, clearNewSurveyId } from '../actions/survey';
 import type { Dispatch } from '../types/index';
-import Question from '../components/Question';
-import QuestionConstructor from "../components/QuestionConstructor";
+import Question from '../components/surveyConstructor/Question';
+import QuestionConstructor from "../components/surveyConstructor/QuestionConstructor";
 
 type OwnProps = {
   questions: [],

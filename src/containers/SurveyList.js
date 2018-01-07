@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { connect, Connector } from 'react-redux';
 import type { Dispatch } from '../types/index';
 import { createSurvey, getSurveyList } from '../actions/survey';
-import Survey from '../components/Survey';
+import Survey from '../components/surveyConstructor/Survey';
 
 type OwnProps = {
   surveyList: [],

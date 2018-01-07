@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   EDIT_SURVEY,
-} from '../constants/routes';
+} from '../../constants/routes';
 
 type Props = {
   item: Object,
