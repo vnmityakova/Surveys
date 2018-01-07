@@ -26,9 +26,19 @@ a:focus {
   outline-offset: -2px;
 }
 
+textarea {
+  font-family: Arial;
+  padding: 10px 5px;
+}
+
 input[type="text"] {
   height: 36px;
   padding: 0 5px;
+}
+
+button + button {
+  margin-left: 10px;
+
 }
 
 .top10 {

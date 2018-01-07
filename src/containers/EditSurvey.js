@@ -8,11 +8,13 @@ import {
   addNewQuestion,
   clearNewSurveyId,
   removeQuestion,
-  changeSurveyTitle, getSurveyDataById, setQuestionsPerPage,
+  changeSurveyTitle,
+  getSurveyDataById,
+  setQuestionsPerPage,
 } from '../actions/survey';
-import type { Dispatch } from '../types/index';
+import type { Dispatch, State } from '../types/index';
 import Question from '../components/surveyConstructor/Question';
-import QuestionConstructor from '../components/surveyConstructor/QuestionConstructor';
+import QuestionEdit from '../components/surveyConstructor/QuestionEdit';
 
 type OwnProps = {
   questions: [],
@@ -21,10 +23,6 @@ type OwnProps = {
 };
 
 type OwnState = {
-  question: string,
-  questionType: string,
-  answer: string,
-  selectedQuestionType: string,
   questionsPerPage: string,
   surveyId: string,
   surveyName: string,
@@ -36,6 +34,7 @@ type DispatchProps = {
   clearNewSurveyId: Function,
   removeQuestion: Function,
   changeSurveyTitle: Function,
+  setQuestionsPerPage: Function,
 };
 
 type Props = OwnProps & DispatchProps;
@@ -43,11 +42,8 @@ type Props = OwnProps & DispatchProps;
 class EditSurvey extends Component {
   props: Props;
   state: OwnState = {
-    question: '',
-    answer: '',
     surveyName: 'Опрос без названия',
     surveyId: this.props.match.params.id,
-    selectedQuestionType: undefined,
     questionsPerPage: '1',
   };
   componentWillMount() {
@@ -90,44 +86,9 @@ class EditSurvey extends Component {
           />
         </div>
 
-        <section className="addItem top10">
-
-          <form>
-            <input
-              type="text"
-              name="question"
-              placeholder="Введите вопрос"
-              onChange={this.handleChange}
-              value={this.state.question}
-              className="questionText"
-            /><br />
-
-            <Select
-              name="selectedQuestionType"
-              value={this.state.selectedQuestionType}
-              className="questionTypesSelect top10"
-              onChange={this.handleQuestionTypeSelect}
-              placeholder="Выберите тип ответа"
-              clearable={false}
-              searchable={false}
-              options={[
-                { value: 'text', label: 'текст' },
-                { value: 'radio', label: 'радиобатоны' },
-                { value: 'checkbox', label: 'чекбоксы' },
-                { value: 'date', label: 'дата' },
-                { value: 'dropbox', label: 'выпадающий список' },
-              ]}
-            />
-
-            <QuestionConstructor
-              selectedQuestionType={this.state.selectedQuestionType}
-              addQuestionAnswerItem={this.addQuestionAnswerItem}
-            />
-
-            <br />
-            {/* <Button label="Добавить вопрос" raised onClick={this.handleAddQuestion} /> */}
-          </form>
-        </section>
+        <QuestionEdit
+          addQuestionAnswerItem={this.addQuestionAnswerItem}
+        />
 
         <section className="displayItem">
           <div className="wrapper">
@@ -146,12 +107,6 @@ class EditSurvey extends Component {
     );
   }
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-
   handleNameChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -163,22 +118,8 @@ class EditSurvey extends Component {
     this.props.removeQuestion(questionId, this.state.surveyId);
   };
 
-  addQuestionAnswerItem = (item) => {
-    const questionAnswerItem = {
-      ...item,
-      question: this.state.question,
-    };
-    this.setState({
-      question: '',
-      questionType: 'text',
-    });
-    this.props.addNewQuestion(questionAnswerItem, this.state.surveyId);
-  };
-
-  handleQuestionTypeSelect = (valueObj) => {
-    this.setState({
-      selectedQuestionType: valueObj.value,
-    });
+  addQuestionAnswerItem = (questionItem) => {
+    this.props.addNewQuestion(questionItem, this.state.surveyId);
   };
 
   handlePageQuestionsNumberSelect = (valueObj) => {

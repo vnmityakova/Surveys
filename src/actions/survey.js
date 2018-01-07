@@ -19,6 +19,7 @@ export const getSurveyDataById = (surveyId): ThunkAction => (dispatch: Dispatch)
           question: item.question,
           answer: item.answer,
           questionType: item.questionType,
+          isEditing: item.isEditing,
         });
       });
       dispatch({ type: '@@SURVEY/GET_SURVEY_DATA_SUCCESS', params, questions });
@@ -67,6 +68,17 @@ export const setQuestionsPerPage = (questionsPerPage, surveyId): ThunkAction => 
     dispatch({ type: '@@SURVEY/SET_SURVEY_QUESTIONS_PER_PAGE_SUCCESS', questionsPerPage });
   } catch (e) {
     dispatch({ type: '@@SURVEY/SET_SURVEY_QUESTIONS_PER_PAGE_FAIL' });
+  }
+};
+
+export const setQuestionEditMode = (questionId, surveyId): ThunkAction => (dispatch: Dispatch) => {
+  try {
+    firebase.database().ref(`/surveyList/${surveyId}/questionList/${questionId}`).update({
+      isEditing: true,
+    });
+    dispatch({ type: '@@SURVEY/SET_QUESTION_EDIT_MODE_SUCCESS', questionId });
+  } catch (e) {
+    dispatch({ type: '@@SURVEY/SET_QUESTION_EDIT_MODE_FAIL' });
   }
 };
 
