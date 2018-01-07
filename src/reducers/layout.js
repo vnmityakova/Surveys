@@ -2,6 +2,7 @@
 import type { Action, LayoutState } from '../types';
 
 const initialState = {
+  surveyParams: {},
   config: null,
   error: null,
   loaded: false,
@@ -20,11 +21,17 @@ const reducer = (state: LayoutState = initialState, action: Action): LayoutState
         ...state,
         loaded: true,
       };
-    case '@@SURVEY/GET_QUESTIONS_SUCCESS':
+    case '@@SURVEY/GET_SURVEY_DATA_SUCCESS':
+      return {
+        ...state,
+        surveyParams: action.params,
+        questions: action.questions,
+      };
+    /* case '@@SURVEY/GET_QUESTIONS_SUCCESS':
       return {
         ...state,
         questions: action.questions,
-      };
+      }; */
     case '@@SURVEY/SET_USER_SUCCESS':
       return {
         ...state,

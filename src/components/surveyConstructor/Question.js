@@ -7,7 +7,8 @@ import Checkbox from 'react-toolbox/lib/checkbox';
 
 type Props = {
   item: Object,
-  // removeQuestion: Function,
+  removeQuestion: Function, //eslint-disable-line
+  index: number,
 };
 
 const Question = (props: Props) => {
@@ -20,7 +21,7 @@ const Question = (props: Props) => {
   if (item.questionType === 'text') {
     return (
       <li key={item.id} className="question">
-        <h3>{item.question}</h3>
+        <h3>{props.index}. {item.question}</h3>
         <p>{item.answer} <input type="text" disabled /></p>
         <Button
           label="Remove"
@@ -36,7 +37,7 @@ const Question = (props: Props) => {
     );
     return (
       <li key={item.id} className="question">
-        <h3>{item.question}</h3>
+        <h3>{props.index}. {item.question}</h3>
         <RadioGroup name="comic">
           {radioList}
         </RadioGroup>
@@ -54,7 +55,7 @@ const Question = (props: Props) => {
     );
     return (
       <li key={item.id} className="question">
-        <h3>{item.question}</h3>
+        <h3>{props.index}. {item.question}</h3>
         {checkboxes}
         <Button
           label="Remove"
@@ -73,7 +74,7 @@ const Question = (props: Props) => {
     );
     return (
       <li key={item.id} className="question">
-        <h3>{item.question}</h3>
+        <h3>{props.index}. {item.question}</h3>
         <Select
           name="form-field-name"
           value={''}

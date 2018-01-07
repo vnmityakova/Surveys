@@ -6,45 +6,25 @@ import type {
 } from '../types';
 import firebase, { auth, provider } from '../firebase';
 
-export const getQuestions = (): ThunkAction => (dispatch: Dispatch) => {
+export const getSurveyDataById = (surveyId): ThunkAction => (dispatch: Dispatch) => {
   try {
-    const itemsRef = firebase.database().ref('items');
+    const itemsRef = firebase.database().ref(`/surveyList/${surveyId}`);
     itemsRef.on('value', (snapshot) => {
+      const survey = snapshot.val();
+      const { params, questionList } = survey;
       const questions = [];
-      const items = snapshot.val();
-      for (const item in items) { // eslint-disable-line
+      forEach(questionList, (item, id) => {
         questions.push({
-          id: item,
-          question: items[item].question,
-          answer: items[item].answer,
-          questionType: items[item].questionType,
+          id,
+          question: item.question,
+          answer: item.answer,
+          questionType: item.questionType,
         });
-      }
-      dispatch({ type: '@@SURVEY/GET_QUESTIONS_SUCCESS', questions });
+      });
+      dispatch({ type: '@@SURVEY/GET_SURVEY_DATA_SUCCESS', params, questions });
     });
   } catch (e) {
-    dispatch({ type: '@@SURVEY/GET_QUESTIONS_FAIL' });
-  }
-};
-
-export const getQuestionsById = (surveyId): ThunkAction => (dispatch: Dispatch) => {
-  try {
-    const itemsRef = firebase.database().ref(`/surveyList/${surveyId}/questionList`);
-    itemsRef.on('value', (snapshot) => {
-      const questions = [];
-      const items = snapshot.val();
-      for (const item in items) { // eslint-disable-line
-        questions.push({
-          id: item,
-          question: items[item].question,
-          answer: items[item].answer,
-          questionType: items[item].questionType,
-        });
-      }
-      dispatch({ type: '@@SURVEY/GET_QUESTIONS_SUCCESS', questions });
-    });
-  } catch (e) {
-    dispatch({ type: '@@SURVEY/GET_QUESTIONS_FAIL' });
+    dispatch({ type: '@@SURVEY/GET_SURVEY_DATA_FAIL' });
   }
 };
 
@@ -58,13 +38,35 @@ export const addNewQuestion = (question, surveyId): ThunkAction => (dispatch: Di
   }
 };
 
-export const removeQuestion = (id): ThunkAction => (dispatch: Dispatch) => {
+export const removeQuestion = (questionId, surveyId): ThunkAction => (dispatch: Dispatch) => {
   try {
-    const itemRef = firebase.database().ref(`/items/${id}`);
+    const itemRef = firebase.database().ref(`/surveyList/${surveyId}/questionList/${questionId}`);
     itemRef.remove();
     dispatch({ type: '@@SURVEY/REMOVE_QUESTION_SUCCESS' });
   } catch (e) {
     dispatch({ type: '@@SURVEY/REMOVE_QUESTION_FAIL' });
+  }
+};
+
+export const changeSurveyTitle = (surveyId, title): ThunkAction => (dispatch: Dispatch) => {
+  try {
+    firebase.database().ref(`/surveyList/${surveyId}/params`).update({
+      title,
+    });
+    dispatch({ type: '@@SURVEY/CHANGE_SURVEY_TITLE_SUCCESS', title });
+  } catch (e) {
+    dispatch({ type: '@@SURVEY/CHANGE_SURVEY_TITLE_FAIL' });
+  }
+};
+
+export const setQuestionsPerPage = (questionsPerPage, surveyId): ThunkAction => (dispatch: Dispatch) => {
+  try {
+    firebase.database().ref(`/surveyList/${surveyId}/params`).update({
+      questionsPerPage,
+    });
+    dispatch({ type: '@@SURVEY/SET_SURVEY_QUESTIONS_PER_PAGE_SUCCESS', questionsPerPage });
+  } catch (e) {
+    dispatch({ type: '@@SURVEY/SET_SURVEY_QUESTIONS_PER_PAGE_FAIL' });
   }
 };
 

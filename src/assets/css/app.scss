@@ -108,6 +108,10 @@ input[type="text"] {
     width: 250px;
   }
 
+  .questionsNumber {
+    min-width: 80px;
+  }
+
 }
 
 .displayItem {
@@ -159,13 +163,20 @@ input[type="text"] {
 .row {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
-  justify-content: space-between;
+  /* align-items: stretch;
+  justify-content: space-between; */
+
+  .col + .col {
+    margin-left: 15px;
+  }
 }
 
 .selectQuestion {
-  .selectAddRow {
+  /*.selectAddRow {
     width: 320px;
+  }*/
+  .Select {
+    min-width: 250px;
   }
   .addItemButton {
     min-width: 50px;

@@ -33,14 +33,14 @@ const SelectQuestion = (props: Props) => {
         <Select
           name="form-field-name"
           value=""
-          className="questionTypesSelect"
+          className="dropboxSelect col"
           placeholder="Выберите..."
           clearable={false}
           searchable={false}
           options={[]}
           disabled
         />
-        <Button label="+" raised onClick={handleAddAnswerItem} className="addItemButton" />
+        <Button label="+" raised onClick={handleAddAnswerItem} className="addItemButton col" />
       </div>
       <div>{dropboxItems}</div>
       <Button className="top10" label="Добавить вопрос" raised onClick={handleAddQuestion} />

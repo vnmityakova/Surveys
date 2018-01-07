@@ -9,6 +9,7 @@ type LayoutState = {
   +config: ?AppConfig,
   +error: ?Object,
   +loaded: boolean,
+  surveyParams: ?Object,
   questions: Array;
   user: ?Object,
   isAuthChecked: boolean,
