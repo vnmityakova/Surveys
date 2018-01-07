@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import Select from 'react-select';
 import { Button } from 'react-toolbox/lib/button';
 import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 import Checkbox from 'react-toolbox/lib/checkbox';
@@ -59,6 +60,35 @@ const Question = (props: Props) => {
           label="Remove"
           raised
           onClick={handleRemove}
+        />
+      </li>
+    );
+  } else if (item.questionType === 'dropbox') {
+    const items = item.answer.map(answer => (
+      {
+        value: answer.value,
+        label: answer.value,
+      }
+      )
+    );
+    return (
+      <li key={item.id} className="question">
+        <h3>{item.question}</h3>
+        <Select
+          name="form-field-name"
+          value={''}
+          className="questionTypesSelect top10"
+          // onChange={this.handleQuestionTypeSelect}
+          placeholder="Выберите тип ответа"
+          clearable={false}
+          searchable={false}
+          options={items}
+        />
+        <Button
+          label="Remove"
+          raised
+          onClick={handleRemove}
+          className="top10"
         />
       </li>
     );

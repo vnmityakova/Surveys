@@ -2,26 +2,21 @@
 import React, { Component } from 'react';
 import { clone, last, map, remove, sortBy, find } from 'lodash';
 
-/* type Props = {
-  addQuestionAnswerItem: Function,
-} */
-
 type OwnState = {
   answerItems: Array,
 };
 
 export function questionWithItems(WrappedComponent, questionType, addQuestionAnswerItem) {
   return class extends Component {
-    // props: Props;
     defaultState: OwnState = {
       answerItems: [
         {
           id: 0,
-          text: 'вариант ответа1',
+          text: '',
         },
         {
           id: 1,
-          text: 'вариант ответа2',
+          text: '',
         },
       ],
     };
@@ -41,7 +36,7 @@ export function questionWithItems(WrappedComponent, questionType, addQuestionAns
       sortBy(newAnswerItems, 'id');
       newAnswerItems.push({
         id: last(newAnswerItems).id + 1,
-        text: 'вариант ответа',
+        text: '',
       });
       this.setState({
         answerItems: newAnswerItems,

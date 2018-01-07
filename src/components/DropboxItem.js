@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import { RadioButton } from 'react-toolbox/lib/radio';
 
 type Props = {
   removeItem: Function,
@@ -10,7 +9,7 @@ type Props = {
   isRemovable: boolean,
 }
 
-class RadioItem extends Component {
+class DropboxItem extends Component {
   props: Props;
 
   render() {
@@ -19,15 +18,13 @@ class RadioItem extends Component {
     return (
       <div>
         {isRemovable ? <span onClick={this.handleRemoveAnswer}>x</span> : null}
-        <RadioButton label="" disabled >
-          <input
-            type="text"
-            className="hoverInput"
-            value={answer}
-            placeholder="Введите вариант ответа"
-            onChange={this.handleChangeAnswerText}
-          />
-        </RadioButton>
+        <input
+          type="text"
+          className="top10"
+          value={answer}
+          placeholder="Введите элемент списка"
+          onChange={this.handleChangeAnswerText}
+        />
       </div>
     );
   }
@@ -42,4 +39,4 @@ class RadioItem extends Component {
 
 }
 
-export default RadioItem;
+export default DropboxItem;

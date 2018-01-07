@@ -1,31 +1,35 @@
 // @flow
 import React, { Component } from 'react';
 import { Button } from 'react-toolbox/lib/button';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 type Props = {
   addQuestionAnswerItem: Function,
 }
 
 type OwnState = {
-  answer: string,
+  answer: Object,
 };
 
-class TextQuestion extends Component {
+class DateQuestion extends Component {
   props: Props;
   state: OwnState = {
-    answer: '',
+    answer: null,
   };
 
   render() {
     return (
       <div>
-        <input
-          type="text"
-          name="answer"
-          placeholder="Введите ответ"
-          onChange={this.handleChange}
-          value={this.state.answer}
+        <DatePicker
+          selected={this.state.answer}
+          dateFormat="DD.MM.YYYY"
+          peekNextMonth
+          showMonthDropdown
+          showYearDropdown
+          dropdownMode="select"
           disabled
+          placeholderText="Выберите дату"
         />
         <br />
         <Button className="top10" label="Добавить вопрос" raised onClick={this.handleAddQuestion} />
@@ -33,23 +37,17 @@ class TextQuestion extends Component {
     );
   }
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-
   handleAddQuestion = () => {
     const item = {
       answer: this.state.answer,
-      questionType: 'text',
+      questionType: 'date',
     };
     this.setState({
-      answer: '',
+      answer: null,
     });
     this.props.addQuestionAnswerItem(item);
   };
 
 }
 
-export default TextQuestion;
+export default DateQuestion;

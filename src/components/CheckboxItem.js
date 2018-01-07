@@ -24,7 +24,13 @@ class CheckboxItem extends Component {
           label=""
           disabled
         >
-          <input type="text" className="hoverInput" value={answer} onChange={this.handleChangeAnswerText} />
+          <input
+            type="text"
+            className="hoverInput"
+            value={answer}
+            placeholder="Введите вариант ответа"
+            onChange={this.handleChangeAnswerText}
+          />
         </Checkbox>
       </div>
     );

@@ -155,3 +155,19 @@ input[type="text"] {
     display: inline-block;
   }
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.selectQuestion {
+  .selectAddRow {
+    width: 320px;
+  }
+  .addItemButton {
+    min-width: 50px;
+  }
+}

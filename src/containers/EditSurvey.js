@@ -88,7 +88,7 @@ class EditSurvey extends Component {
                 { value: 'radio', label: 'радиобатоны' },
                 { value: 'checkbox', label: 'чекбоксы' },
                 { value: 'date', label: 'дата' },
-                { value: 'select', label: 'выпадающий список' },
+                { value: 'dropbox', label: 'выпадающий список' },
               ]}
             />
 
