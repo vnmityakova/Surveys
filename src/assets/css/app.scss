@@ -13,12 +13,12 @@ body {
 }
 
 a {
-  color: #337ab7;
+  color: #015C65;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #23527c;
+  color: darken(#015C65, 30%);
   text-decoration: underline;
 }
 a:focus {
@@ -41,10 +41,19 @@ input[type="text"] {
 }
 
 .header {
+  background-color: #015C65;
   border-bottom: 1px solid #dddddd;
   margin-bottom: 10px;
   padding-bottom: 10px;
   padding-top: 10px;
+
+  a {
+    color: #99eaf2;
+  }
+  a:hover,
+  a:focus {
+    color: darken(#99eaf2, 30%);
+  }
 }
 
 .grid-1-2 {
@@ -58,6 +67,7 @@ input[type="text"] {
 
   .userButton button {
     width: 180px;
+    color: #fff !important;
   }
 
   .arrow {
@@ -128,7 +138,8 @@ input[type="text"] {
 }
 
 .addItem {
-  background-color: #e0f9fe;
+  background-color: #DCF6F6;
+  border-top: 2px solid #006363;
 }
 
 .questionText {
