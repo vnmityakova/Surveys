@@ -17,9 +17,10 @@ export const getSurveyDataById = (surveyId): ThunkAction => (dispatch: Dispatch)
         questions.push({
           id,
           question: item.question,
-          answer: item.answer,
+          answers: item.answers,
           questionType: item.questionType,
           isEditing: item.isEditing,
+          index: item.index,
         });
       });
       dispatch({ type: '@@SURVEY/GET_SURVEY_DATA_SUCCESS', params, questions });
@@ -29,9 +30,15 @@ export const getSurveyDataById = (surveyId): ThunkAction => (dispatch: Dispatch)
   }
 };
 
-export const addNewQuestion = (question, surveyId): ThunkAction => (dispatch: Dispatch) => {
+export const addNewQuestion = (question, surveyId): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
   try {
+    const { questions } = getState().layout;
+    const index = questions.length + 1;
     const itemsRef = firebase.database().ref(`/surveyList/${surveyId}/questionList`);
+    question = {
+      ...question,
+      index,
+    };
     itemsRef.push(question);
     dispatch({ type: '@@SURVEY/ADD_QUESTION_SUCCESS' });
   } catch (e) {
@@ -71,10 +78,10 @@ export const changeQuestion = (questionId: string, question: Object): ThunkActio
 export const saveQuestion = (): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
   try {
     const surveyId = getState().layout.editSurveyId;
-    const { id, question, answer, questionType } = getState().layout.editingQuestion;
+    const { id, question, answers, questionType } = getState().layout.editingQuestion;
     firebase.database().ref(`/surveyList/${surveyId}/questionList/${id}`).update({
       question,
-      answer: answer || [], // TODO при создании вопроса бы сразу ставить []
+      answers: answers || [], // TODO при создании вопроса бы сразу ставить []
       questionType,
     });
     console.warn(question);

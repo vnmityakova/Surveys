@@ -9,7 +9,7 @@ export type QuestionType = {
   index: number,
   question: string,
   questionType?: string,
-  answer?: Array,
+  answers?: Array,
 }
 
 type LayoutState = {

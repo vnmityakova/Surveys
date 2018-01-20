@@ -14,11 +14,11 @@ type Props = {
 }
 
 const SelectQuestion = (props: Props) => {
-  const { answer } = props.editingQuestion;
+  const { answers } = props.editingQuestion;
   const { removeItem, changeAnswer, handleAddAnswerItem } = props;
 
-  const dropboxItems = map(answer, (item, i) => {
-    const isRemovable = answer.length > 2;
+  const dropboxItems = map(answers, (item, i) => {
+    const isRemovable = answers.length > 2;
     return (
       <DropboxItem
         id={i}

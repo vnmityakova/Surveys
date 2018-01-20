@@ -20,7 +20,7 @@ class QuestionEditBlock extends Component {
   props: DispatchProps;
 
   render() {
-    const { question, index, questionType, answer, id } = this.props.editingQuestion;
+    const { question, index, questionType, answers, id } = this.props.editingQuestion;
     const options = [
       { value: 'text', label: 'текст' },
       { value: 'radio', label: 'радиобатоны' },
@@ -50,7 +50,7 @@ class QuestionEditBlock extends Component {
         />
         <QuestionEditConstructor
           selectedQuestionType={questionType}
-          answers={answer}
+          answers={answers}
           id={id}
           key={id}
         />

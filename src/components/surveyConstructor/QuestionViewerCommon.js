@@ -9,7 +9,6 @@ type Props = {
   removeQuestion: Function,
   setIsEdit: Function,
   surveyId: string,
-  index: number,
 };
 
 type OwnState = {
@@ -33,7 +32,7 @@ class QuestionViewerCommon extends Component {
     const { item } = this.props;
     return (
       <li key={item.id} className="question">
-        <h3>{this.props.index}. {item.question}</h3>
+        <h3>{item.index}. {item.question}</h3>
           {this.props.children}
         <Button
           label="Remove"

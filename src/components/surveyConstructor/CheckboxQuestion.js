@@ -14,11 +14,11 @@ type Props = {
 }
 
 const CheckboxQuestion = (props: Props) => {
-  const { answer } = props.editingQuestion;
+  const { answers } = props.editingQuestion;
   const { removeItem, changeAnswer, handleAddAnswerItem } = props;
 
-  const checkboxes = map(answer, (item, i) => {
-    const isRemovable = answer.length > 2;
+  const checkboxes = map(answers, (item, i) => {
+    const isRemovable = answers.length > 2;
     return (
       <CheckboxItem
         id={i}

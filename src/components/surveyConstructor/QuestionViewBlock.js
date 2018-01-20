@@ -17,7 +17,6 @@ type OwnProps = {
 };
 
 type DispatchProps = {
-  index: number,
   onRemoveQuestion: Function,
   onChangeQuestion: Function,
 };
@@ -36,7 +35,6 @@ class QuestionViewBlock extends Component {
         removeQuestion={this.handleRemove}
         surveyId={this.props.match.params.id}
         setIsEdit={this.handleEdit}
-        index={this.props.index}
       >
         {this.getQuestionViewerChild()}
       </QuestionViewerCommon>
@@ -59,7 +57,7 @@ class QuestionViewBlock extends Component {
     if (item.questionType === 'text') {
       questionViewerChild = <p><input type="text" disabled /></p>;
     } else if (item.questionType === 'radio') {
-      const radioList = item.answer.map(answer => (
+      const radioList = item.answers.map(answer => (
         <RadioButton label={answer.value} value={answer.value} disabled />
       ));
       questionViewerChild = (
@@ -68,11 +66,11 @@ class QuestionViewBlock extends Component {
         </RadioGroup>
       );
     } else if (item.questionType === 'checkbox') {
-      questionViewerChild = item.answer.map(answer => (
+      questionViewerChild = item.answers.map(answer => (
         <Checkbox label={answer.value} disabled />
       ));
     } else if (item.questionType === 'dropbox') {
-      const items = item.answer.map(answer => ({
+      const items = item.answers.map(answer => ({
         value: answer.value,
         label: answer.value,
       }));

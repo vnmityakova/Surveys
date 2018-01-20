@@ -21,7 +21,7 @@ type Props = {
 }
 
 const RadioQuestion = (props: Props) => {
-  const { answer } = props.editingQuestion;
+  const { answers } = props.editingQuestion;
   const { removeItem, changeAnswer, handleAddAnswerItem } = props;
   /* const handleAddAnswerItem = () => {
     const newAnswerItems = clone(answer);
@@ -56,8 +56,8 @@ const RadioQuestion = (props: Props) => {
     });
   }; */
 
-  const radioboxes = map(answer, (item, i) => {
-    const isRemovable = answer.length > 2;
+  const radioboxes = map(answers, (item, i) => {
+    const isRemovable = answers.length > 2;
     return (
       <RadioItem
         id={i}

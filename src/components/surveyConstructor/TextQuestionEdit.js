@@ -24,7 +24,6 @@ class TextQuestionEdit extends Component {
           name="answer"
           placeholder="Введите ответ"
           onChange={this.handleChange}
-          value={this.state.answer}
           disabled
         />
         <br />

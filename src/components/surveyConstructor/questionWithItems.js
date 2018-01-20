@@ -16,10 +16,10 @@ export function questionWithItems(WrappedComponent) {
     props: Props;
 
     componentDidMount() {
-      if (!this.props.editingQuestion.answer) {
+      if (!this.props.editingQuestion.answers) {
         const { id } = this.props.editingQuestion;
         this.props.onChangeQuestion(id, {
-          answer: [
+          answers: [
             {
               id: 0,
               text: '',
@@ -44,38 +44,38 @@ export function questionWithItems(WrappedComponent) {
     }
 
     handleAddAnswerItem = () => {
-      const { answer, id } = this.props.editingQuestion;
-      const newAnswerItems = clone(answer);
+      const { answers, id } = this.props.editingQuestion;
+      const newAnswerItems = clone(answers);
       sortBy(newAnswerItems, 'id');
       newAnswerItems.push({
         id: last(newAnswerItems).id + 1,
         text: '',
       });
       this.props.onChangeQuestion(id, {
-        answer: newAnswerItems,
+        answers: newAnswerItems,
       });
     };
 
     changeAnswer = (id, value) => {
-      const { answer } = this.props.editingQuestion;
-      const newAnswerItems = clone(answer);
+      const { answers } = this.props.editingQuestion;
+      const newAnswerItems = clone(answers);
       const itemToChange = find(newAnswerItems, (item, i) => (
         i === id
       ));
       itemToChange.value = value;
       this.props.onChangeQuestion(id, {
-        answer: newAnswerItems,
+        answers: newAnswerItems,
       });
     };
 
     removeItem = (id) => {
-      const { answer } = this.props.editingQuestion;
-      const newAnswerItems = clone(answer);
+      const { answers } = this.props.editingQuestion;
+      const newAnswerItems = clone(answers);
       remove(newAnswerItems, (item, i) => (
         i === id
       ));
       this.props.onChangeQuestion(id, {
-        answer: newAnswerItems,
+        answers: newAnswerItems,
       });
     };
 
