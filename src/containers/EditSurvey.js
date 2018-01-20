@@ -56,7 +56,7 @@ class EditSurvey extends Component {
           addNewQuestion={this.props.addNewQuestion}
           surveyId={match.params.id}
         />
-        <QuestionsList /* questions={this.props.questions} */ />
+        <QuestionsList questions={this.props.questions} />
       </div>
     );
   }
