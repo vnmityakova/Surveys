@@ -22,7 +22,7 @@ const CheckboxQuestion = (props: Props) => {
     return (
       <CheckboxItem
         id={i}
-        answer={item.value}
+        answer={item.value || ''}
         removeItem={removeItem}
         key={`item-${i}`}
         changeAnswer={changeAnswer}

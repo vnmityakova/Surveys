@@ -22,7 +22,7 @@ const SelectQuestion = (props: Props) => {
     return (
       <DropboxItem
         id={i}
-        answer={item.value}
+        answer={item.value || ''}
         removeItem={removeItem}
         key={`item-${i}`}
         changeAnswer={changeAnswer}
