@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import {
   EDIT_SURVEY,
 } from '../../constants/routes';
+import type { QuestionType } from '../../types/layout';
 
 type Props = {
-  item: Object,
+  item: QuestionType,
 };
 
 const SurveyLink = (props: Props) => {

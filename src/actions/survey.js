@@ -5,6 +5,7 @@ import type {
   ThunkAction,
 } from '../types';
 import firebase, { auth, provider } from '../firebase';
+import type { QuestionType } from '../types/layout';
 
 export const getSurveyDataById = (surveyId): ThunkAction => (dispatch: Dispatch) => {
   try {
@@ -56,7 +57,7 @@ export const removeQuestion = (questionId, surveyId): ThunkAction => (dispatch: 
   }
 };
 
-export const changeQuestion = (questionId: string, question: Object): ThunkAction =>
+export const changeQuestion = (questionId: string, question: QuestionType): ThunkAction =>
   (dispatch: Dispatch, getState: GetState) => {
     // const surveyId = getState().layout.editSurveyId;
     const clonedQuestion = cloneDeep(question);

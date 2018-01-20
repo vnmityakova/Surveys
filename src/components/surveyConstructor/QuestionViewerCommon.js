@@ -2,10 +2,11 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { Button } from 'react-toolbox/lib/button';
+import type { QuestionType } from '../../types/layout';
 
 type Props = {
   children: any,
-  item: Object,
+  item: QuestionType,
   removeQuestion: Function,
   setIsEdit: Function,
   surveyId: string,

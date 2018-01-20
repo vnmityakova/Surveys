@@ -15,10 +15,11 @@ import type { Dispatch, State } from '../types/index';
 import QuestionAddBlock from '../components/surveyConstructor/QuestionAddBlock';
 import QuestionsList from '../components/surveyConstructor/QuestionsList';
 import SurveyParamsBlock from '../components/surveyConstructor/SurveyParamsBlock';
+import type { SurveyParamsType } from '../types/layout';
 
 type OwnProps = {
   match: Object,
-  surveyParams: Object,
+  surveyParams: SurveyParamsType,
   questions: [],
 };
 

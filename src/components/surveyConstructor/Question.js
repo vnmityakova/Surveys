@@ -6,7 +6,7 @@ import QuestionViewBlock from './QuestionViewBlock';
 import type { QuestionType } from '../../types/layout';
 
 type OwnProps = {
-  item: Object,
+  item: QuestionType,
 };
 
 type DispatchProps = {

@@ -9,10 +9,11 @@ import Checkbox from 'react-toolbox/lib/checkbox';
 import QuestionViewerCommon from './QuestionViewerCommon';
 import { changeQuestion, removeQuestion } from '../../actions/survey';
 import type { Dispatch } from '../../types';
+import type { QuestionType } from '../../types/layout';
 
 
 type OwnProps = {
-  item: Object,
+  item: QuestionType,
   match: Object,
 };
 

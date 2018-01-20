@@ -2,9 +2,10 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import { Button } from 'react-toolbox/lib/button';
+import type { SurveyParamsType } from '../../types/layout';
 
 type Props = {
-  surveyParams: Object,
+  surveyParams: SurveyParamsType,
   surveyId: string,
   changeSurveyTitle: Function,
   setQuestionsPerPage: Function,

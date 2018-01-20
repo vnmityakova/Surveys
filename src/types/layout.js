@@ -12,11 +12,16 @@ export type QuestionType = {
   answers?: Array,
 }
 
+export type SurveyParamsType = {
+  title: string,
+  questionsPerPage: number,
+}
+
 type LayoutState = {
   +config: ?AppConfig,
   +error: ?Object,
   +loaded: boolean,
-  surveyParams: ?Object,
+  surveyParams: ?SurveyParamsType,
   questions: Array,
   user: ?Object,
   isAuthChecked: boolean,
