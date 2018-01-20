@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { connect, Connector } from 'react-redux';
 import type { Dispatch } from '../types/index';
 import { createSurvey, getSurveyList } from '../actions/survey';
-import Survey from '../components/surveyConstructor/Survey';
+import SurveyLink from '../components/surveyConstructor/SurveyLink';
 
 type OwnProps = {
   surveyList: [],
@@ -48,7 +48,7 @@ class SurveyList extends Component {
           Список опросов:
           <ul>
             {this.props.surveyList.map((item) => {
-              return (<Survey
+              return (<SurveyLink
                 item={item}
               />);
             })}

@@ -1,145 +1,112 @@
 // @flow
 import React, { Component } from 'react';
 import Select from 'react-select';
-import { Button } from 'react-toolbox/lib/button';
+import DatePicker from 'react-datepicker';
 import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 import Checkbox from 'react-toolbox/lib/checkbox';
+import QuestionEditBlock from './QuestionEditBlock';
+import QuestionViewerCommon from './QuestionViewerCommon';
 
 type Props = {
   item: Object,
-  removeQuestion: Function,
   index: number,
+  surveyId: string,
+  isEditing: boolean,
+  removeQuestion: Function,
+  changeQuestion: Function,
 };
 
-type OwnState = {
-  isEditing: boolean,
-};
 
 class Question extends Component {
   props: Props;
-  state: OwnState = {
-    isEditing: false,
-  };
 
   render() {
-    const item = this.props.item;
+    const { item } = this.props;
 
-    const handleRemove = () => {
-      const itemId = this.props.item.id;
-      this.props.removeQuestion(itemId);
-    };
+    if (this.props.isEditing) {
+      return (
+        <QuestionEditBlock />
+      );
+    }
 
-    const handleEdit = () => {
-      this.setState({
-        isEditing: true,
-      });
-    };
+    return (
+      <QuestionViewerCommon // TODO сделать контейнером, тогда QuestionsList мб компонентом
+        item={item}
+        removeQuestion={this.handleRemove}
+        surveyId={this.props.surveyId}
+        setIsEdit={this.handleEdit}
+        index={this.props.index}
+      >
+        {this.getQuestionViewerChild()}
+      </QuestionViewerCommon>
+    );
+  }
+
+  handleRemove = () => {
+    const questionId = this.props.item.id;
+    this.props.removeQuestion(questionId, this.props.surveyId);
+  };
+
+  handleEdit = () => {
+    this.props.changeQuestion(this.props.item.id, this.props.item);
+  };
+
+  /* handleSaveQuestion = (question: Object) => {
+    this.setState({
+      isEditing: false,
+    });
+    // this.props.saveQuestion(question, this.props.surveyId);
+  }; */
+
+  getQuestionViewerChild = () => {
+    const { item } = this.props;
+    let questionViewerChild = null;
 
     if (item.questionType === 'text') {
-      /* if (this.state.isEditing) {
-        return (<div>edit</div>);
-      } */
-      return (
-        <li key={item.id} className="question">
-          <h3>{this.props.index}. {item.question}</h3>
-          <p><input type="text" disabled /></p>
-          <Button
-            label="Remove"
-            raised
-            onClick={handleRemove}
-          />
-          <Button
-            label="Edit"
-            raised
-            onClick={handleEdit}
-            className="top10"
-          />
-        </li>
-      );
+      questionViewerChild = <p><input type="text" disabled /></p>;
     } else if (item.questionType === 'radio') {
       const radioList = item.answer.map(answer => (
         <RadioButton label={answer.value} value={answer.value} disabled />
-        )
-      );
-      return (
-        <li key={item.id} className="question">
-          <h3>{this.props.index}. {item.question}</h3>
-          <RadioGroup name="comic">
-            {radioList}
-          </RadioGroup>
-          <Button
-            label="Remove"
-            raised
-            onClick={handleRemove}
-          />
-          <Button
-            label="Edit"
-            raised
-            onClick={handleEdit}
-            className="top10"
-          />
-        </li>
+        ));
+      questionViewerChild = (
+        <RadioGroup name="comic">
+          {radioList}
+        </RadioGroup>
       );
     } else if (item.questionType === 'checkbox') {
-      const checkboxes = item.answer.map(answer => (
+      questionViewerChild = item.answer.map(answer => (
         <Checkbox label={answer.value} disabled />
-        )
-      );
-      return (
-        <li key={item.id} className="question">
-          <h3>{this.props.index}. {item.question}</h3>
-          {checkboxes}
-          <Button
-            label="Remove"
-            raised
-            onClick={handleRemove}
-          />
-          <Button
-            label="Edit"
-            raised
-            onClick={handleEdit}
-            className="top10"
-          />
-        </li>
-      );
+        ));
     } else if (item.questionType === 'dropbox') {
-      const items = item.answer.map(answer => (
-        {
-          value: answer.value,
-          label: answer.value,
-        }
-        )
-      );
-      return (
-        <li key={item.id} className="question">
-          <h3>{this.props.index}. {item.question}</h3>
-          <Select
-            name="form-field-name"
-            value={''}
-            className="questionTypesSelect top10"
-            // onChange={this.handleQuestionTypeSelect}
-            placeholder="Выберите тип ответа"
-            clearable={false}
-            searchable={false}
-            options={items}
-          />
-          <Button
-            label="Remove"
-            raised
-            onClick={handleRemove}
-            className="top10"
-          />
-          <Button
-            label="Edit"
-            raised
-            onClick={handleEdit}
-            className="top10"
-          />
-        </li>
-      );
+      const items = item.answer.map(answer => ({
+        value: answer.value,
+        label: answer.value,
+      }));
+      questionViewerChild = (<Select
+        name="form-field-name"
+        value={''}
+        className="questionTypesSelect top10"
+        // onChange={this.handleQuestionTypeSelect}
+        placeholder="Выберите тип ответа"
+        clearable={false}
+        searchable={false}
+        options={items}
+      />);
+    } else if (item.questionType === 'date') {
+      questionViewerChild = (<DatePicker
+        dateFormat="DD.MM.YYYY"
+        peekNextMonth
+        showMonthDropdown
+        showYearDropdown
+        dropdownMode="select"
+        disabled
+        placeholderText="Выберите дату"
+      />);
     }
-    return null;
+
+    return questionViewerChild;
   }
+
 }
 
 export default Question;

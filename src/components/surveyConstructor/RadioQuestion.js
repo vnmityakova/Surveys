@@ -1,43 +1,97 @@
 // @flow
+/* eslint-disable */
 import React from 'react';
 import { RadioGroup } from 'react-toolbox/lib/radio';
 import { Button } from 'react-toolbox/lib/button';
-import { map } from 'lodash';
+import {clone, find, last, map, remove, sortBy} from 'lodash';
 import RadioItem from './RadioItem';
+import type {QuestionType} from "../../types/layout";
+
+/* type DispatchProps = {
+  editingQuestion: Question,
+  onChangeQuestion: Function,
+  handleAddAnswerItem
+} */
 
 type Props = {
-  answerItems: Array,
+  editingQuestion: QuestionType,
   handleAddAnswerItem: Function,
-  handleAddQuestion: Function,
   removeItem: Function,
   changeAnswer: Function,
 }
 
 const RadioQuestion = (props: Props) => {
-  const { answerItems, handleAddAnswerItem, handleAddQuestion, removeItem, changeAnswer } = props;
-  const radioboxes = map(answerItems, (item) => {
-    const isRemovable = answerItems.length > 2;
+  const { answer } = props.editingQuestion;
+  const { removeItem, changeAnswer, handleAddAnswerItem } = props;
+  /* const handleAddAnswerItem = () => {
+    const newAnswerItems = clone(answer);
+    sortBy(newAnswerItems, 'id');
+    newAnswerItems.push({
+      id: last(newAnswerItems).id + 1,
+      text: '',
+    });
+    props.onChangeQuestion(id, {
+      answerItems: newAnswerItems,
+    });
+  };
+
+  const removeItem = (id) => {
+    const newAnswerItems = clone(answer);
+    remove(newAnswerItems, item => (
+      item.id === id
+    ));
+    props.onChangeQuestion(id, {
+      answerItems: newAnswerItems,
+    });
+  };
+
+  const changeAnswer = (id, value) => {
+    const newAnswerItems = clone(answer);
+    const itemToChange = find(newAnswerItems, item => (
+      item.id === id
+    ));
+    itemToChange.text = value;
+    props.onChangeQuestion(id, {
+      answerItems: newAnswerItems,
+    });
+  }; */
+
+  const radioboxes = map(answer, (item, i) => {
+    const isRemovable = answer.length > 2;
     return (
       <RadioItem
-        id={item.id}
-        answer={item.text}
+        id={i}
+        answer={item.value}
         removeItem={removeItem}
-        key={`item-${item.id}`}
+        key={`item-${i}`}
         changeAnswer={changeAnswer}
         isRemovable={isRemovable}
       />
     );
   });
+
   return (
     <div className="radioQuestion">
       <Button label="+" raised onClick={handleAddAnswerItem} className="addItemButton" /><br />
       <RadioGroup name="radioQuestion" className="top10">
         {radioboxes}
       </RadioGroup>
-      <br />
-      <Button label="Добавить вопрос" raised onClick={handleAddQuestion} />
     </div>
   );
 };
+
+/* const mapStateToProps = (state: State) => {
+  return {
+    editingQuestion: state.layout.editingQuestion,
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+  onChangeQuestion: (questionId, questionObj) => dispatch(changeQuestion(questionId, questionObj)),
+});
+
+const connector: Connector<State, DispatchProps> = connect(mapStateToProps, mapDispatchToProps);
+
+export default withRouter(connector(RadioQuestion)); */
 
 export default RadioQuestion;

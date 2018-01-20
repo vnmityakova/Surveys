@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import { throttle } from 'lodash';
 import Checkbox from 'react-toolbox/lib/checkbox';
 
 type Props = {
@@ -29,7 +30,7 @@ class CheckboxItem extends Component {
             className="hoverInput"
             value={answer}
             placeholder="Введите вариант ответа"
-            onChange={this.handleChangeAnswerText}
+            onChange={throttle(this.handleChangeAnswerText, 350)}
           />
         </Checkbox>
       </div>

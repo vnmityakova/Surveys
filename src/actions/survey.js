@@ -1,5 +1,5 @@
 // @flow
-import { forEach } from 'lodash';
+import { forEach, cloneDeep } from 'lodash';
 import type {
   Dispatch,
   ThunkAction,
@@ -49,6 +49,46 @@ export const removeQuestion = (questionId, surveyId): ThunkAction => (dispatch: 
   }
 };
 
+export const changeQuestion = (questionId: string, question: Object): ThunkAction =>
+  (dispatch: Dispatch, getState: GetState) => {
+    // const surveyId = getState().layout.editSurveyId;
+    const clonedQuestion = cloneDeep(question);
+    let editingQuestion = getState().layout.editingQuestion;
+    if (editingQuestion) {
+      editingQuestion = {
+        ...editingQuestion,
+        ...clonedQuestion,
+      };
+    } else {
+      editingQuestion = {
+        ...clonedQuestion,
+        id: questionId,
+      };
+    }
+    dispatch({ type: '@@SURVEY/CHANGE_EDITING_QUESTION_SUCCESS', editingQuestion });
+  };
+
+export const saveQuestion = (): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
+  try {
+    const surveyId = getState().layout.editSurveyId;
+    const { id, question, answer, questionType } = getState().layout.editingQuestion;
+    firebase.database().ref(`/surveyList/${surveyId}/questionList/${id}`).update({
+      question,
+      answer: answer || [], // TODO при создании вопроса бы сразу ставить []
+      questionType,
+    });
+    console.warn(question);
+    dispatch({ type: '@@SURVEY/SAVE_QUESTION_SUCCESS' });
+    dispatch({ type: '@@SURVEY/CANCEL_QUESTION_EDIT_SUCCESS' });
+  } catch (e) {
+    dispatch({ type: '@@SURVEY/SAVE_QUESTION_FAIL', e });
+  }
+};
+
+export const cancelEdit = (): ThunkAction => (dispatch: Dispatch) => {
+  dispatch({ type: '@@SURVEY/CANCEL_QUESTION_EDIT_SUCCESS' });
+};
+
 export const changeSurveyTitle = (surveyId, title): ThunkAction => (dispatch: Dispatch) => {
   try {
     firebase.database().ref(`/surveyList/${surveyId}/params`).update({
@@ -69,6 +109,10 @@ export const setQuestionsPerPage = (questionsPerPage, surveyId): ThunkAction => 
   } catch (e) {
     dispatch({ type: '@@SURVEY/SET_SURVEY_QUESTIONS_PER_PAGE_FAIL' });
   }
+};
+
+export const setEditSurveyId = (surveyId): ThunkAction => (dispatch: Dispatch) => {
+  dispatch({ type: '@@SURVEY/SET_EDIT_SURVEY_ID_SUCCESS', surveyId });
 };
 
 export const setQuestionEditMode = (questionId, surveyId): ThunkAction => (dispatch: Dispatch) => {

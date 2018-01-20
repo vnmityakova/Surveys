@@ -4,17 +4,26 @@ type AppConfig = {
   version: string,
 };
 
+export type QuestionType = {
+  id: string,
+  index: number,
+  question: string,
+  questionType?: string,
+  answer?: Array,
+}
 
 type LayoutState = {
   +config: ?AppConfig,
   +error: ?Object,
   +loaded: boolean,
   surveyParams: ?Object,
-  questions: Array;
+  questions: Array,
   user: ?Object,
   isAuthChecked: boolean,
   surveyList: Array;
   newSurveyId: String,
+  editSurveyId: String,
+  editingQuestion: QuestionType,
 };
 
 type LayoutActions =

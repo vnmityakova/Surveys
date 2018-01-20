@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import { throttle } from 'lodash';
 
 type Props = {
   removeItem: Function,
@@ -23,7 +24,7 @@ class DropboxItem extends Component {
           className="top10"
           value={answer}
           placeholder="Введите элемент списка"
-          onChange={this.handleChangeAnswerText}
+          onChange={throttle(this.handleChangeAnswerText, 350)}
         />
       </div>
     );

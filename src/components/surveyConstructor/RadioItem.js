@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import { throttle } from 'lodash';
 import { RadioButton } from 'react-toolbox/lib/radio';
 
 type Props = {
@@ -25,7 +26,7 @@ class RadioItem extends Component {
             className="hoverInput"
             value={answer}
             placeholder="Введите вариант ответа"
-            onChange={this.handleChangeAnswerText}
+            onChange={throttle(this.handleChangeAnswerText, 350)}
           />
         </RadioButton>
       </div>

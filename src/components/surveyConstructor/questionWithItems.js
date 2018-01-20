@@ -1,83 +1,97 @@
 // @flow
 import React, { Component } from 'react';
-import { clone, last, map, remove, sortBy, find } from 'lodash';
+import { connect, Connector } from 'react-redux';
+import { clone, last, remove, sortBy, find } from 'lodash';
+import type { Dispatch, State } from '../../types';
+import { changeQuestion } from '../../actions/survey';
+import type { QuestionType } from '../../types/layout';
 
-type OwnState = {
-  answerItems: Array,
-};
+type Props = {
+  editingQuestion: QuestionType,
+  onChangeQuestion: Function,
+}
 
-export function questionWithItems(WrappedComponent, questionType, addQuestionAnswerItem) {
-  return class extends Component {
-    defaultState: OwnState = {
-      answerItems: [
-        {
-          id: 0,
-          text: '',
-        },
-        {
-          id: 1,
-          text: '',
-        },
-      ],
-    };
-    state: OwnState = this.defaultState;
+export function questionWithItems(WrappedComponent) {
+  class QuestionWithItems extends Component {
+    props: Props;
+
+    componentDidMount() {
+      if (!this.props.editingQuestion.answer) {
+        const { id } = this.props.editingQuestion;
+        this.props.onChangeQuestion(id, {
+          answer: [
+            {
+              id: 0,
+              text: '',
+            },
+            {
+              id: 1,
+              text: '',
+            },
+          ],
+        });
+      }
+    }
+
     render() {
       return (<WrappedComponent
-        answerItems={this.state.answerItems}
+        editingQuestion={this.props.editingQuestion}
         handleAddAnswerItem={this.handleAddAnswerItem}
-        handleAddQuestion={this.handleAddQuestion}
         removeItem={this.removeItem}
         changeAnswer={this.changeAnswer}
+        key={this.props.editingQuestion.id}
       />);
     }
 
     handleAddAnswerItem = () => {
-      const newAnswerItems = clone(this.state.answerItems);
+      const { answer, id } = this.props.editingQuestion;
+      const newAnswerItems = clone(answer);
       sortBy(newAnswerItems, 'id');
       newAnswerItems.push({
         id: last(newAnswerItems).id + 1,
         text: '',
       });
-      this.setState({
-        answerItems: newAnswerItems,
+      this.props.onChangeQuestion(id, {
+        answer: newAnswerItems,
       });
     };
 
-    handleAddQuestion = () => {
-      const answerList = map(this.state.answerItems, item => (
-        {
-          value: item.text,
-        }
-      ));
-
-      const item = {
-        answer: answerList,
-        questionType,
-      };
-      addQuestionAnswerItem(item);
-      this.setState(this.defaultState);
-    };
-
     changeAnswer = (id, value) => {
-      const newAnswerItems = clone(this.state.answerItems);
-      const itemToChange = find(newAnswerItems, item => (
-        item.id === id
+      const { answer } = this.props.editingQuestion;
+      const newAnswerItems = clone(answer);
+      const itemToChange = find(newAnswerItems, (item, i) => (
+        i === id
       ));
-      itemToChange.text = value;
-      this.setState({
-        answerItems: newAnswerItems,
+      itemToChange.value = value;
+      this.props.onChangeQuestion(id, {
+        answer: newAnswerItems,
       });
     };
 
     removeItem = (id) => {
-      const newAnswerItems = clone(this.state.answerItems);
-      remove(newAnswerItems, item => (
-        item.id === id
+      const { answer } = this.props.editingQuestion;
+      const newAnswerItems = clone(answer);
+      remove(newAnswerItems, (item, i) => (
+        i === id
       ));
-      this.setState({
-        answerItems: newAnswerItems,
+      this.props.onChangeQuestion(id, {
+        answer: newAnswerItems,
       });
-    }
+    };
 
+  }
+
+  const mapStateToProps = (state: State) => {
+    return {
+      editingQuestion: state.layout.editingQuestion,
+    };
   };
+
+  const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+    onChangeQuestion: (questionId, questionObj) => dispatch(changeQuestion(questionId, questionObj)),
+  });
+
+  const connector: Connector = connect(mapStateToProps, mapDispatchToProps);
+
+  return connector(QuestionWithItems);
 }

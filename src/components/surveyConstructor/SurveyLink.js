@@ -9,7 +9,7 @@ type Props = {
   item: Object,
 };
 
-const Survey = (props: Props) => {
+const SurveyLink = (props: Props) => {
   const item = props.item;
 
   return (
@@ -23,4 +23,4 @@ const Survey = (props: Props) => {
   );
 };
 
-export default Survey;
+export default SurveyLink;

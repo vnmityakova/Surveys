@@ -138,6 +138,7 @@ button + button {
   ul {
     padding-left: 0;
     list-style: none;
+    margin-top: 0;
   }
 }
 
@@ -147,14 +148,37 @@ button + button {
   margin-bottom: 10px;
 }
 
+.addItemParent {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-sizing: border-box;
+
+  .edge {
+    height: 35px;
+    background: linear-gradient(to top, transparent, #fff, #fff);
+  }
+}
+
 .addItem {
   background-color: #DCF6F6;
   border-top: 2px solid #006363;
+  margin-bottom: 0;
+
+  .questionText {
+    width: 100%;
+    box-sizing: border-box;
+  }
 }
 
-.questionText {
-  width: 100%;
-  box-sizing: border-box;
+.editItem {
+  .questionText {
+    width: 90%;
+  }
+
+  h3 {
+    display: inline;
+  }
 }
 
 .checkboxQuestion {

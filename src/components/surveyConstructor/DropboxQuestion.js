@@ -4,25 +4,27 @@ import { Button } from 'react-toolbox/lib/button';
 import Select from 'react-select';
 import { map } from 'lodash';
 import DropboxItem from './DropboxItem';
+import type { QuestionType } from '../../types/layout';
 
 type Props = {
-  answerItems: Array,
+  editingQuestion: QuestionType,
   handleAddAnswerItem: Function,
-  handleAddQuestion: Function,
   removeItem: Function,
   changeAnswer: Function,
 }
 
 const SelectQuestion = (props: Props) => {
-  const { answerItems, handleAddAnswerItem, handleAddQuestion, removeItem, changeAnswer } = props;
-  const dropboxItems = map(answerItems, (item) => {
-    const isRemovable = answerItems.length > 2;
+  const { answer } = props.editingQuestion;
+  const { removeItem, changeAnswer, handleAddAnswerItem } = props;
+
+  const dropboxItems = map(answer, (item, i) => {
+    const isRemovable = answer.length > 2;
     return (
       <DropboxItem
-        id={item.id}
-        answer={item.text}
+        id={i}
+        answer={item.value}
         removeItem={removeItem}
-        key={`item-${item.id}`}
+        key={`item-${i}`}
         changeAnswer={changeAnswer}
         isRemovable={isRemovable}
       />);
@@ -43,7 +45,6 @@ const SelectQuestion = (props: Props) => {
         <Button label="+" raised onClick={handleAddAnswerItem} className="addItemButton col" />
       </div>
       <div>{dropboxItems}</div>
-      <Button className="top10" label="Добавить вопрос" raised onClick={handleAddQuestion} />
     </div>
   );
 };

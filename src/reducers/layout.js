@@ -12,6 +12,8 @@ const initialState = {
   isAuthChecked: false,
   surveyList: [],
   newSurveyId: '',
+  editSurveyId: '',
+  editingQuestion: null,
 };
 
 const reducer = (state: LayoutState = initialState, action: Action): LayoutState => {
@@ -53,10 +55,25 @@ const reducer = (state: LayoutState = initialState, action: Action): LayoutState
         ...state,
         surveyList: action.surveys,
       };
+    case '@@SURVEY/SET_EDIT_SURVEY_ID_SUCCESS':
+      return {
+        ...state,
+        editSurveyId: action.surveyId,
+      };
     case '@@SURVEY/ADD_SURVEY_SUCCESS':
       return {
         ...state,
         newSurveyId: action.newId,
+      };
+    case '@@SURVEY/CHANGE_EDITING_QUESTION_SUCCESS':
+      return {
+        ...state,
+        editingQuestion: action.editingQuestion,
+      };
+    case '@@SURVEY/CANCEL_QUESTION_EDIT_SUCCESS':
+      return {
+        ...state,
+        editingQuestion: null,
       };
     case '@@SURVEY/CLEAR_NEW_SURVEY_ID':
       return {
