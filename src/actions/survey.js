@@ -7,9 +7,11 @@ import type {
 import firebase, { auth, provider } from '../firebase';
 import type { QuestionType } from '../types/layout';
 
-export const getSurveyDataById = (surveyId): ThunkAction => (dispatch: Dispatch) => {
+export const getSurveyDataById = (surveyId): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
+  const { user } = getState().layout;
+  const cleanedEmail = user.email.replace('.', '');
   try {
-    const itemsRef = firebase.database().ref(`/surveyList/${surveyId}`);
+    const itemsRef = firebase.database().ref(`${cleanedEmail}/surveyList/${surveyId}`);
     itemsRef.on('value', (snapshot) => {
       const survey = snapshot.val();
       const { params, questionList } = survey;
@@ -32,10 +34,12 @@ export const getSurveyDataById = (surveyId): ThunkAction => (dispatch: Dispatch)
 };
 
 export const addNewQuestion = (question, surveyId): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
+  const { user } = getState().layout;
+  const cleanedEmail = user.email.replace('.', '');
   try {
     const { questions } = getState().layout;
     const index = questions.length + 1;
-    const itemsRef = firebase.database().ref(`/surveyList/${surveyId}/questionList`);
+    const itemsRef = firebase.database().ref(`${cleanedEmail}/surveyList/${surveyId}/questionList`);
     question = {
       ...question,
       index,
@@ -47,9 +51,11 @@ export const addNewQuestion = (question, surveyId): ThunkAction => (dispatch: Di
   }
 };
 
-export const removeQuestion = (questionId, surveyId): ThunkAction => (dispatch: Dispatch) => {
+export const removeQuestion = (questionId, surveyId): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
+  const { user } = getState().layout;
+  const cleanedEmail = user.email.replace('.', '');
   try {
-    const itemRef = firebase.database().ref(`/surveyList/${surveyId}/questionList/${questionId}`);
+    const itemRef = firebase.database().ref(`${cleanedEmail}/surveyList/${surveyId}/questionList/${questionId}`);
     itemRef.remove();
     dispatch({ type: '@@SURVEY/REMOVE_QUESTION_SUCCESS' });
   } catch (e) {
@@ -77,10 +83,12 @@ export const changeQuestion = (questionId: string, question: QuestionType): Thun
   };
 
 export const saveQuestion = (): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
+  const { user } = getState().layout;
+  const cleanedEmail = user.email.replace('.', '');
   try {
     const surveyId = getState().layout.editSurveyId;
     const { id, question, answers, questionType } = getState().layout.editingQuestion;
-    firebase.database().ref(`/surveyList/${surveyId}/questionList/${id}`).update({
+    firebase.database().ref(`${cleanedEmail}/surveyList/${surveyId}/questionList/${id}`).update({
       question,
       answers: answers || [], // TODO при создании вопроса бы сразу ставить []
       questionType,
@@ -97,9 +105,11 @@ export const cancelEdit = (): ThunkAction => (dispatch: Dispatch) => {
   dispatch({ type: '@@SURVEY/CANCEL_QUESTION_EDIT_SUCCESS' });
 };
 
-export const changeSurveyTitle = (surveyId, title): ThunkAction => (dispatch: Dispatch) => {
+export const changeSurveyTitle = (surveyId, title): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
+  const { user } = getState().layout;
+  const cleanedEmail = user.email.replace('.', '');
   try {
-    firebase.database().ref(`/surveyList/${surveyId}/params`).update({
+    firebase.database().ref(`${cleanedEmail}/surveyList/${surveyId}/params`).update({
       title,
     });
     dispatch({ type: '@@SURVEY/CHANGE_SURVEY_TITLE_SUCCESS', title });
@@ -108,24 +118,29 @@ export const changeSurveyTitle = (surveyId, title): ThunkAction => (dispatch: Di
   }
 };
 
-export const setQuestionsPerPage = (questionsPerPage, surveyId): ThunkAction => (dispatch: Dispatch) => {
-  try {
-    firebase.database().ref(`/surveyList/${surveyId}/params`).update({
-      questionsPerPage,
-    });
-    dispatch({ type: '@@SURVEY/SET_SURVEY_QUESTIONS_PER_PAGE_SUCCESS', questionsPerPage });
-  } catch (e) {
-    dispatch({ type: '@@SURVEY/SET_SURVEY_QUESTIONS_PER_PAGE_FAIL' });
-  }
-};
+export const setQuestionsPerPage = (questionsPerPage, surveyId): ThunkAction =>
+  (dispatch: Dispatch, getState: GetState) => {
+    const { user } = getState().layout;
+    const cleanedEmail = user.email.replace('.', '');
+    try {
+      firebase.database().ref(`${cleanedEmail}/surveyList/${surveyId}/params`).update({
+        questionsPerPage,
+      });
+      dispatch({ type: '@@SURVEY/SET_SURVEY_QUESTIONS_PER_PAGE_SUCCESS', questionsPerPage });
+    } catch (e) {
+      dispatch({ type: '@@SURVEY/SET_SURVEY_QUESTIONS_PER_PAGE_FAIL' });
+    }
+  };
 
 export const setEditSurveyId = (surveyId): ThunkAction => (dispatch: Dispatch) => {
   dispatch({ type: '@@SURVEY/SET_EDIT_SURVEY_ID_SUCCESS', surveyId });
 };
 
-export const setQuestionEditMode = (questionId, surveyId): ThunkAction => (dispatch: Dispatch) => {
+export const setQuestionEditMode = (questionId, surveyId): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
+  const { user } = getState().layout;
+  const cleanedEmail = user.email.replace('.', '');
   try {
-    firebase.database().ref(`/surveyList/${surveyId}/questionList/${questionId}`).update({
+    firebase.database().ref(`${cleanedEmail}/surveyList/${surveyId}/questionList/${questionId}`).update({
       isEditing: true,
     });
     dispatch({ type: '@@SURVEY/SET_QUESTION_EDIT_MODE_SUCCESS', questionId });
@@ -134,9 +149,11 @@ export const setQuestionEditMode = (questionId, surveyId): ThunkAction => (dispa
   }
 };
 
-export const createSurvey = (): ThunkAction => (dispatch: Dispatch) => {
+export const createSurvey = (): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
   try {
-    const itemsRef = firebase.database().ref('surveyList');
+    const { user } = getState().layout;
+    const cleanedEmail = user.email.replace('.', '');
+    const itemsRef = firebase.database().ref(`${cleanedEmail}/surveyList`);
     const params = {
       title: 'Опрос без названия',
     };
@@ -154,9 +171,11 @@ export const clearNewSurveyId = (): ThunkAction => (dispatch: Dispatch) => {
   dispatch({ type: '@@SURVEY/CLEAR_NEW_SURVEY_ID' });
 };
 
-export const getSurveyList = (): ThunkAction => (dispatch: Dispatch) => {
+export const getSurveyList = (): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
   try {
-    const itemsRef = firebase.database().ref('surveyList');
+    const { user } = getState().layout;
+    const cleanedEmail = user.email.replace('.', '');
+    const itemsRef = firebase.database().ref(`${cleanedEmail}/surveyList`);
     itemsRef.on('value', (snapshot) => {
       const surveys = [];
       const items = snapshot.val();
@@ -176,8 +195,23 @@ export const getSurveyList = (): ThunkAction => (dispatch: Dispatch) => {
 export const setUser = (): ThunkAction => (dispatch: Dispatch) => {
   auth.signInWithPopup(provider)
     .then((result) => {
-      const user = result.user;
-      dispatch({ type: '@@SURVEY/SET_USER_SUCCESS', user });
+      const curUser = result.user;
+      const cleanedEmail = curUser.email.replace('.', '');
+      const dataHeadRef = firebase.database().ref();
+
+      dataHeadRef.child(cleanedEmail).once('value', (snapshot) => {
+        const exists = (snapshot.val() !== null);
+        if (!exists) {
+          const user = {
+            userParams: {
+              email: curUser.email,
+            },
+          };
+          dataHeadRef.update({ [cleanedEmail]: user });
+          dispatch({ type: '@@SURVEY/ADD_USER', curUser });
+        }
+      });
+      dispatch({ type: '@@SURVEY/SET_USER_SUCCESS', curUser });
     });
 };
 
@@ -196,20 +230,3 @@ export const logout = (): ThunkAction => (dispatch: Dispatch) => {
     dispatch({ type: '@@SURVEY/USER_LOGOUT_SUCCESS' });
   });
 };
-
-/* export const getQuestions2 = (): ThunkAction => { // (dispatch: Dispatch, getState: GetState) => any;
-  const itemsRef = firebase.database().ref('items');
-  let items = {};
-  const questions = [];
-  return (dispatch: Dispatch) => itemsRef.on('value', (snapshot) => { // (action: Action | ThunkAction | PromiseAction | Array<Action>) => any
-    items = snapshot.val();
-    for (const item in items) { // eslint-disable-line
-      questions.push({
-        id: item,
-        question: items[item].question,
-        answer: items[item].answer,
-      });
-    }
-    dispatch({ type: '@@SURVEY/GET_QUESTIONS_SUCCESS', questions });
-  });
-}; */

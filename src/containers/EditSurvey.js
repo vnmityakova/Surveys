@@ -50,8 +50,8 @@ class EditSurvey extends Component {
         <SurveyParamsBlock
           surveyParams={surveyParams}
           surveyId={match.params.id}
-          setQuestionsPerPage={this.setQuestionsPerPage}
-          changeSurveyTitle={this.changeSurveyTitle}
+          setQuestionsPerPage={this.props.setQuestionsPerPage}
+          changeSurveyTitle={this.props.changeSurveyTitle}
         />
         <QuestionAddBlock
           addNewQuestion={this.props.addNewQuestion}
