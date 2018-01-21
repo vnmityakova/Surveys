@@ -10,6 +10,7 @@ type Props = {
   removeQuestion: Function,
   setIsEdit: Function,
   surveyId: string,
+  isEditButtonDisabled: boolean,
 };
 
 type OwnState = {
@@ -30,7 +31,7 @@ class QuestionViewerCommon extends Component {
   };
 
   render() {
-    const { item } = this.props;
+    const { item, isEditButtonDisabled } = this.props;
     return (
       <li key={item.id} className="question">
         <h3>{item.index}. {item.question}</h3>
@@ -45,6 +46,7 @@ class QuestionViewerCommon extends Component {
           raised
           onClick={this.handleEdit}
           className="top10"
+          disabled={isEditButtonDisabled}
         />
       </li>
     );

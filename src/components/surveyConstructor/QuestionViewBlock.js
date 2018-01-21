@@ -8,13 +8,14 @@ import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 import Checkbox from 'react-toolbox/lib/checkbox';
 import QuestionViewerCommon from './QuestionViewerCommon';
 import { changeQuestion, removeQuestion } from '../../actions/survey';
-import type { Dispatch } from '../../types';
+import type { Dispatch, State } from '../../types';
 import type { QuestionType } from '../../types/layout';
 
 
 type OwnProps = {
   item: QuestionType,
   match: Object,
+  editingQuestion: QuestionType,
 };
 
 type DispatchProps = {
@@ -28,7 +29,7 @@ class QuestionViewBlock extends Component {
   props: Props;
 
   render() {
-    const { item } = this.props;
+    const { item, editingQuestion } = this.props;
 
     return (
       <QuestionViewerCommon
@@ -36,6 +37,7 @@ class QuestionViewBlock extends Component {
         removeQuestion={this.handleRemove}
         surveyId={this.props.match.params.id}
         setIsEdit={this.handleEdit}
+        isEditButtonDisabled={!!editingQuestion}
       >
         {this.getQuestionViewerChild()}
       </QuestionViewerCommon>
@@ -102,11 +104,15 @@ class QuestionViewBlock extends Component {
 
 }
 
+const mapStateToProps = (state: State) => ({
+  editingQuestion: state.layout.editingQuestion,
+});
+
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onRemoveQuestion: (questionId, surveyId) => dispatch(removeQuestion(questionId, surveyId)),
   onChangeQuestion: (questionId, questionObj) => dispatch(changeQuestion(questionId, questionObj)),
 });
 
-const connector: Connector<{}, DispatchProps> = connect(null, mapDispatchToProps);
+const connector: Connector<State, DispatchProps> = connect(mapStateToProps, mapDispatchToProps);
 
 export default withRouter(connector(QuestionViewBlock));
