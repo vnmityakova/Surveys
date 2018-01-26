@@ -87,10 +87,14 @@ export const saveQuestion = (): ThunkAction => (dispatch: Dispatch, getState: Ge
   const cleanedEmail = user.email.replace('.', '');
   try {
     const surveyId = getState().layout.editSurveyId;
-    const { id, question, answers, questionType } = getState().layout.editingQuestion;
+    const { id, question, questionType } = getState().layout.editingQuestion;
+    let { answers } = getState().layout.editingQuestion;
+    if (questionType === 'date' || questionType === 'text') {
+      answers = [];
+    }
     firebase.database().ref(`${cleanedEmail}/surveyList/${surveyId}/questionList/${id}`).update({
       question,
-      answers: answers || [], // TODO при создании вопроса бы сразу ставить []
+      answers,
       questionType,
     });
     console.warn(question);
