@@ -10,6 +10,7 @@ import {
   ABOUT_PATH,
   SURVEY_LIST,
   EDIT_SURVEY_WITH_ID,
+  PASS_SURVEY,
 } from '../constants/routes';
 import type { State, Dispatch } from '../types';
 import type {
@@ -23,6 +24,7 @@ import SurveyList from './SurveyList';
 // import '../assets/css/bootstrap.css';
 import '../assets/css/app.scss';
 import HeaderMenu from '../components/HeaderMenu';
+import PassSurvey from '../components/surveyPass/PassSurvey';
 
 type Props = {};
 
@@ -82,6 +84,10 @@ class Layout extends Component {
                     <Redirect to={{pathname: ABOUT_PATH}}/>
                 );
               }}
+            />}
+            {<Route
+              path={PASS_SURVEY}
+              render={() => <PassSurvey />}
             />}
             {<Route
               path={ABOUT_PATH}

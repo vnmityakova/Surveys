@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   EDIT_SURVEY,
+  PASS_SURVEY,
 } from '../../constants/routes';
 import type { QuestionType } from '../../types/layout';
 
@@ -18,6 +19,9 @@ const SurveyLink = (props: Props) => {
       <p>
         <Link to={`${EDIT_SURVEY}/${item.id}`}>
           {item.title}
+        </Link>{' '}
+        <Link to={`${PASS_SURVEY}/${item.id}`}>
+          (Пройти)
         </Link>
       </p>
     </li>
