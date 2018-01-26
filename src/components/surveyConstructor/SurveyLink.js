@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import {
   EDIT_SURVEY,
   PASS_SURVEY,
@@ -9,21 +10,30 @@ import type { QuestionType } from '../../types/layout';
 
 type Props = {
   item: QuestionType,
+  removeSurvey: Function,
 };
 
 const SurveyLink = (props: Props) => {
-  const item = props.item;
+  const { item } = props;
 
-  return (
-    <li key={item.id}>
-      <p>
-        <Link to={`${EDIT_SURVEY}/${item.id}`}>
-          {item.title}
-        </Link>{' '}
-        <Link to={`${PASS_SURVEY}/${item.id}`}>
-          (Пройти)
-        </Link>
-      </p>
+  const removeSurvey = () => {
+    props.removeSurvey(item.id);
+  };
+
+  return ( // TODO 'li' in 'a' is not good
+    <li key={item.id} className="surveyItem">
+      <Link to={`${EDIT_SURVEY}/${item.id}`} className="titleBlock">
+        {item.title}
+      </Link>
+
+      <span className="buttonBlock left10">
+        <IconMenu icon="more_vert" position="topLeft" menuRipple>
+          <Link to={`${PASS_SURVEY}/${item.id}`} target="_blank">
+            <MenuItem value="view" icon="pageview">Проcмотреть</MenuItem>
+          </Link>
+          <MenuItem value="delete" icon="delete" caption="Удалить" onClick={removeSurvey} />
+        </IconMenu>
+      </span>
     </li>
   );
 };

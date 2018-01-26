@@ -4,7 +4,7 @@ import { Button } from 'react-toolbox/lib/button';
 import { withRouter } from 'react-router-dom';
 import { connect, Connector } from 'react-redux';
 import type { Dispatch } from '../types/index';
-import { createSurvey, getSurveyList } from '../actions/survey';
+import { createSurvey, getSurveyList, removeSurvey } from '../actions/survey';
 import SurveyLink from '../components/surveyConstructor/SurveyLink';
 
 type OwnProps = {
@@ -14,6 +14,9 @@ type OwnProps = {
 };
 
 type DispatchProps = {
+  getSurveyList: Function,
+  createSurvey: Function,
+  removeSurvey: Function,
 };
 
 type Props = OwnProps & DispatchProps;
@@ -45,11 +48,12 @@ class SurveyList extends Component {
         </div>
 
         <div className="surveyList">
-          Список опросов:
-          <ul>
+          <h3>Опросы</h3>
+          <ul className="surveyItems">
             {this.props.surveyList.map((item) => {
               return (<SurveyLink
                 item={item}
+                removeSurvey={this.props.removeSurvey}
               />);
             })}
           </ul>
@@ -72,6 +76,7 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   getSurveyList: () => dispatch(getSurveyList()),
   createSurvey: () => dispatch(createSurvey()),
+  removeSurvey: id => dispatch(removeSurvey(id)),
 });
 
 const connector: Connector<{}, Props> = connect(mapStateToProps, mapDispatchToProps);

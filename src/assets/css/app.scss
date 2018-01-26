@@ -41,8 +41,20 @@ button + button {
 
 }
 
+[data-react-toolbox="menu"] {
+  top: 35px !important;
+}
+
 .top10 {
   margin-top: 10px;
+}
+
+.left10 {
+  margin-left: 10px;
+}
+
+h3 {
+  font-size: 18px;
 }
 
 .container {
@@ -85,9 +97,9 @@ button + button {
     top: 8px;
   }
 
-  [data-react-toolbox="menu"] {
+  /*[data-react-toolbox="menu"] {
     top: 35px;
-  }
+  }*/
 }
 
 .headerMenu {
@@ -226,5 +238,41 @@ button + button {
   }
   .addItemButton {
     min-width: 50px;
+  }
+}
+
+ul.surveyItems {
+  padding-left: 0;
+  list-style: none;
+  margin-top: 0;
+
+  .surveyItem {
+    width: 50%;
+    padding: 5px 0;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+
+    .titleBlock {
+      display: inline-block;
+      min-height: 36px;
+      box-sizing: border-box;
+      width: 90%;
+    }
+
+    .buttonBlock {
+      display: inline-block;
+      vertical-align: top;
+      .theme--icon {
+        color: gray;
+      }
+    }
+
+    a {
+      padding-top: 8px;
+    }
+
+    a:hover, a:focus {
+      text-decoration: none;
+    }
   }
 }

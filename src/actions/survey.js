@@ -171,6 +171,19 @@ export const createSurvey = (): ThunkAction => (dispatch: Dispatch, getState: Ge
   }
 };
 
+export const removeSurvey = (surveyId): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
+  const { user } = getState().layout;
+  const cleanedEmail = user.email.replace('.', '');
+  try {
+    const itemRef = firebase.database().ref(`${cleanedEmail}/surveyList/${surveyId}/`);
+    itemRef.off('value');
+    itemRef.remove();
+    dispatch({ type: '@@SURVEY/REMOVE_SURVEY_SUCCESS' });
+  } catch (e) {
+    dispatch({ type: '@@SURVEY/REMOVE_SURVEY_FAIL' });
+  }
+};
+
 export const clearNewSurveyId = (): ThunkAction => (dispatch: Dispatch) => {
   dispatch({ type: '@@SURVEY/CLEAR_NEW_SURVEY_ID' });
 };
