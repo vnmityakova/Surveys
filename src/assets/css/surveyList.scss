@@ -1,0 +1,39 @@
+ul.surveyItems {
+  padding-left: 0;
+  list-style: none;
+  margin-top: 0;
+
+  .surveyItem {
+    width: 50%;
+    padding: 5px 0;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+
+    .titleBlock {
+      display: inline-block;
+      min-height: 36px;
+      box-sizing: border-box;
+      width: 90%;
+    }
+
+    .buttonBlock {
+      display: inline-block;
+      vertical-align: top;
+      .theme--icon {
+        color: gray;
+      }
+    }
+
+    a {
+      padding-top: 8px;
+    }
+
+    a:hover, a:focus {
+      text-decoration: none;
+    }
+  }
+}
+
+.surveyList {
+  padding-top: 20px;
+}

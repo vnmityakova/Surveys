@@ -55,95 +55,25 @@ h3 {
   font-size: 18px;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+
+  .col + .col {
+    margin-left: 15px;
+  }
+}
+
 .container {
   max-width: 1170px;
   margin: 0 auto;
   padding: 0 10px 10px 10px;
 }
 
-.header {
-  background-color: #015C65;
-  border-bottom: 1px solid #dddddd;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  padding-top: 10px;
-
-  a {
-    color: #99eaf2;
-  }
-  a:hover,
-  a:focus {
-    color: darken(#99eaf2, 30%);
-  }
-}
-
 .grid-1-2 {
   display: grid;
   grid-template-columns: 250px 1fr;
   grid-template-rows: 40px;
-}
-
-.authMenu {
-  text-align: right;
-
-  .userButton button {
-    width: 180px;
-    color: #fff !important;
-  }
-
-  .arrow {
-    position: relative;
-    top: 8px;
-  }
-
-  /*[data-react-toolbox="menu"] {
-    top: 35px;
-  }*/
-}
-
-.headerMenu {
-  .item {
-    padding: 0 10px;
-
-    a {
-      padding-top: 10px;
-      display: inline-block;
-    }
-  }
-
-}
-
-.surveyList {
-  padding-top: 20px;
-}
-
-.hoverInput {
-  border: 1px solid transparent;
-  background-color: transparent;
-
-  &:hover {
-    border: 1px solid #ddd;
-  }
-}
-
-.editSurvey {
-  .surveyName {
-    padding-bottom: 20px;
-
-    input[type="text"] {
-      font-size: 18px;
-    }
-  }
-
-  .questionTypesSelect {
-    width: 250px;
-  }
-
-  .questionsNumber {
-    min-width: 80px;
-    z-index: 101;
-  }
-
 }
 
 .displayItem {
@@ -157,125 +87,8 @@ h3 {
 .question, .addItem {
   border: 1px solid #ddd;
   padding: 10px;
+}
+
+.question {
   margin-bottom: 10px;
-}
-
-.addItemParent {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-sizing: border-box;
-
-  .edge {
-    height: 35px;
-    background: linear-gradient(to top, transparent, #fff, #fff);
-  }
-}
-
-.addItem {
-  background-color: #DCF6F6;
-  border-top: 2px solid #006363;
-  margin-bottom: 0;
-
-  .questionText {
-    width: 100%;
-    box-sizing: border-box;
-  }
-}
-
-.editItem {
-  .questionText {
-    width: 90%;
-  }
-
-  h3 {
-    display: inline;
-  }
-}
-
-.checkboxQuestion {
-  .theme--check {
-    margin-top: 9px;
-  }
-}
-
-.radioQuestion {
-  .theme--radio {
-    margin-top: 9px;
-  }
-}
-
-.radioQuestion, .checkboxQuestion {
-  input[type="text"] {
-    margin-left: 5px;
-  }
-  .addItemButton {
-    min-width: 50px;
-  }
-  .theme--field {
-    display: inline-block;
-  }
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  /* align-items: stretch;
-  justify-content: space-between; */
-
-  .col + .col {
-    margin-left: 15px;
-  }
-}
-
-.selectQuestion {
-  /*.selectAddRow {
-    width: 320px;
-  }*/
-  .Select {
-    min-width: 250px;
-  }
-  .addItemButton {
-    min-width: 50px;
-  }
-}
-
-ul.surveyItems {
-  padding-left: 0;
-  list-style: none;
-  margin-top: 0;
-
-  .surveyItem {
-    width: 50%;
-    padding: 5px 0;
-    font-size: 14px;
-    border-bottom: 1px solid #ddd;
-
-    .titleBlock {
-      display: inline-block;
-      min-height: 36px;
-      box-sizing: border-box;
-      width: 90%;
-    }
-
-    .buttonBlock {
-      display: inline-block;
-      vertical-align: top;
-      .theme--icon {
-        color: gray;
-      }
-    }
-
-    a {
-      padding-top: 8px;
-    }
-
-    a:hover, a:focus {
-      text-decoration: none;
-    }
-  }
-}
-
-.previewLink {
-  padding-top: 12px;
 }

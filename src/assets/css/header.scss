@@ -1,0 +1,45 @@
+.header {
+  background-color: #015C65;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+
+  a {
+    color: #99eaf2;
+  }
+  a:hover,
+  a:focus {
+    color: darken(#99eaf2, 30%);
+  }
+}
+
+.authMenu {
+  text-align: right;
+
+  .userButton button {
+    width: 180px;
+    color: #fff !important;
+  }
+
+  .arrow {
+    position: relative;
+    top: 8px;
+  }
+
+  /*[data-react-toolbox="menu"] {
+    top: 35px;
+  }*/
+}
+
+.headerMenu {
+  .item {
+    padding: 0 10px;
+
+    a {
+      padding-top: 10px;
+      display: inline-block;
+    }
+  }
+
+}

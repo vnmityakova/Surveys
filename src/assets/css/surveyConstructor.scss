@@ -1,0 +1,98 @@
+.addItemParent {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-sizing: border-box;
+
+  .edge {
+    height: 35px;
+    background: linear-gradient(to top, transparent, #fff, #fff);
+  }
+}
+
+.addItem {
+  background-color: #DCF6F6;
+  border-top: 2px solid #006363;
+  margin-bottom: 0;
+
+  .questionText {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.editItem {
+  .questionText {
+    width: 90%;
+  }
+
+  h3 {
+    display: inline;
+  }
+}
+
+.checkboxQuestion {
+  .theme--check {
+    margin-top: 9px;
+  }
+}
+
+.radioQuestion {
+  .theme--radio {
+    margin-top: 9px;
+  }
+}
+
+.radioQuestion, .checkboxQuestion {
+  input[type="text"] {
+    margin-left: 5px;
+  }
+  .addItemButton {
+    min-width: 50px;
+  }
+  .theme--field {
+    display: inline-block;
+  }
+}
+
+.selectQuestion {
+  .Select {
+    min-width: 250px;
+  }
+  .addItemButton {
+    min-width: 50px;
+  }
+}
+
+.previewLink {
+  padding-top: 12px;
+}
+
+.hoverInput {
+  border: 1px solid transparent;
+  background-color: transparent;
+
+  &:hover {
+    border: 1px solid #ddd;
+  }
+}
+
+.editSurvey {
+  .surveyName {
+    padding-bottom: 20px;
+
+    input[type="text"] {
+      font-size: 18px;
+    }
+  }
+
+  .questionTypesSelect {
+    width: 250px;
+  }
+
+  .questionsNumber {
+    min-width: 80px;
+    z-index: 101;
+  }
+
+}
