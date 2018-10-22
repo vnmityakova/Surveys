@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
-import layout from './layout';
+import surveyConstructor from './surveyConstructor';
 
 export default combineReducers({
-  layout,
+  surveyConstructor,
   routing: routerReducer,
 });
