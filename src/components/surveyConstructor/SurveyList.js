@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import { Button } from 'react-toolbox/lib/button';
 import { withRouter } from 'react-router-dom';
 import { connect, Connector } from 'react-redux';
-import type { Dispatch } from '../types/index';
-import { createSurvey, getSurveyList, removeSurvey } from '../actions/survey';
-import SurveyLink from '../components/surveyConstructor/SurveyLink';
-import '../assets/css/surveyList.scss';
+import type { Dispatch } from '../../types/index';
+import { createSurvey, getSurveyList, removeSurvey } from '../../actions/survey';
+import SurveyLink from './SurveyLink';
+import '../../assets/css/surveyList.scss';
 
 type OwnProps = {
   surveyList: [],

@@ -10,13 +10,13 @@ import {
   getSurveyDataById,
   setQuestionsPerPage,
   setEditSurveyId,
-} from '../actions/survey';
-import type { Dispatch, State } from '../types/index';
-import QuestionAddBlock from '../components/surveyConstructor/QuestionAddBlock';
-import QuestionsList from '../components/surveyConstructor/QuestionsList';
-import SurveyParamsBlock from '../components/surveyConstructor/SurveyParamsBlock';
-import type { SurveyParamsType } from '../types/layout';
-import '../assets/css/surveyConstructor.scss';
+} from '../../actions/survey';
+import type { Dispatch, State } from '../../types/index';
+import QuestionAddBlock from './QuestionAddBlock';
+import QuestionsList from './QuestionsList';
+import SurveyParamsBlock from './SurveyParamsBlock';
+import type { SurveyParamsType } from '../../types/layout';
+import '../../assets/css/surveyConstructor.scss';
 
 type OwnProps = {
   match: Object,

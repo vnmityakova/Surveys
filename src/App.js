@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import createHistory from 'history/createBrowserHistory';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
-import Layout from '../containers/Layout';
-import { configureStore } from '../configureStore';
+import Layout from './Layout';
+import { configureStore } from './configureStore';
 
 const store = configureStore();
 const history = createHistory();
