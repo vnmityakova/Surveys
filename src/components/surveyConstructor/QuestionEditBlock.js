@@ -72,21 +72,14 @@ class QuestionEditBlock extends Component {
     });
   };
 
-  handleCancelEdit = () => {
-    this.props.cancelEdit();
-  };
+  handleCancelEdit = () => this.props.cancelEdit();
 
-  handleSaveQuestion = () => {
-    this.props.saveQuestion();
-  };
-
+  handleSaveQuestion = () => this.props.saveQuestion()
 }
 
-const mapStateToProps = (state: State) => {
-  return {
-    editingQuestion: state.layout.editingQuestion,
-  };
-};
+const mapStateToProps = (state: State) => ({
+  editingQuestion: state.layout.editingQuestion,
+});
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onChangeQuestion: (questionId, questionObj) => dispatch(changeQuestion(questionId, questionObj)),

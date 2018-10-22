@@ -62,10 +62,7 @@ class SurveyList extends Component {
     );
   }
 
-  createSurveyHandler = () => {
-    this.props.createSurvey();
-  }
-
+  createSurveyHandler = () => this.props.createSurvey();
 }
 
 const mapStateToProps = (state: State) => ({

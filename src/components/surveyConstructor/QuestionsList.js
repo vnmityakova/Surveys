@@ -1,11 +1,20 @@
 // @flow
 import React, { Component } from 'react';
+import { connect, Connector } from 'react-redux';
 import 'react-select/dist/react-select.css';
-import Question from './Question';
+import QuestionViewBlock from './QuestionViewBlock';
+import QuestionEditBlock from './QuestionEditBlock';
+import type { QuestionType } from '../../types/layout';
 
-type Props = {
+type OwnProps = {
   questions: [],
 };
+
+type DispatchProps = {
+  editingQuestion: QuestionType,
+};
+
+type Props = OwnProps & DispatchProps;
 
 class QuestionsList extends Component { // eslint-disable-line
   props: Props;
@@ -16,7 +25,12 @@ class QuestionsList extends Component { // eslint-disable-line
         <div className="wrapper">
           <ul>
             {this.props.questions.map((item) => {
-              return (<Question item={item} />);
+              const { editingQuestion } = this.props;
+              const isEditing = editingQuestion && editingQuestion.id === item.id;
+              if (isEditing) {
+                return <QuestionEditBlock />;
+              }
+              return <QuestionViewBlock item={item} />;
             })}
           </ul>
         </div>
@@ -25,4 +39,10 @@ class QuestionsList extends Component { // eslint-disable-line
   }
 }
 
-export default QuestionsList;
+const mapStateToProps = (state: State) => ({
+  editingQuestion: state.layout.editingQuestion,
+});
+
+const connector: Connector<OwnProps, {}> = connect(mapStateToProps, null);
+
+export default connector(QuestionsList);

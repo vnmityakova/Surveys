@@ -10,6 +10,31 @@ import type { QuestionType } from '../types/layout';
 export const getSurveyDataById = (surveyId): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
   const { user } = getState().layout;
   const cleanedEmail = user.email.replace('.', '');
+  /* try {
+    const itemsRef = firebase.database().ref(`${cleanedEmail}/surveyList/${surveyId}`);
+    itemsRef.on('value', (snapshot) => {
+      const survey = snapshot.val();
+      const { params, questionList } = survey;
+      const questions = [];
+      forEach(questionList, (item, id) => {
+        questions.push({
+          id,
+          question: item.question,
+          answers: item.answers,
+          questionType: item.questionType,
+          isEditing: item.isEditing,
+          index: item.index,
+        });
+      });
+      dispatch({ type: '@@SURVEY/GET_SURVEY_DATA_SUCCESS', params, questions });
+    });
+  } catch (e) {
+    dispatch({ type: '@@SURVEY/GET_SURVEY_DATA_FAIL' });
+  } */
+  dispatch(getSurveyData(surveyId, cleanedEmail));
+};
+
+export const getSurveyData = (surveyId, cleanedEmail): ThunkAction => (dispatch: Dispatch) => {
   try {
     const itemsRef = firebase.database().ref(`${cleanedEmail}/surveyList/${surveyId}`);
     itemsRef.on('value', (snapshot) => {
@@ -97,7 +122,6 @@ export const saveQuestion = (): ThunkAction => (dispatch: Dispatch, getState: Ge
       answers,
       questionType,
     });
-    console.warn(question);
     dispatch({ type: '@@SURVEY/SAVE_QUESTION_SUCCESS' });
     dispatch({ type: '@@SURVEY/CANCEL_QUESTION_EDIT_SUCCESS' });
   } catch (e) {
@@ -166,6 +190,12 @@ export const createSurvey = (): ThunkAction => (dispatch: Dispatch, getState: Ge
     });
     const key = newEl.key;
     dispatch({ type: '@@SURVEY/ADD_SURVEY_SUCCESS', newId: key });
+
+    const surveyUserListRef = firebase.database().ref('surveyUserList');
+    surveyUserListRef.update({
+      [key]: cleanedEmail,
+    });
+    dispatch({ type: '@@SURVEY/ADD_SURVEY_USER_ITEM', surveyId: key, userId: cleanedEmail });
   } catch (e) {
     dispatch({ type: '@@SURVEY/ADD_SURVEY_FAIL' });
   }
@@ -179,14 +209,17 @@ export const removeSurvey = (surveyId): ThunkAction => (dispatch: Dispatch, getS
     itemRef.off('value');
     itemRef.remove();
     dispatch({ type: '@@SURVEY/REMOVE_SURVEY_SUCCESS' });
+    const surveyUserListRef = firebase.database().ref(`surveyUserList/${surveyId}/`);
+    surveyUserListRef.remove();
+    dispatch({ type: '@@SURVEY/REMOVE_SURVEY_USER_ITEM_SUCCESS' });
   } catch (e) {
     dispatch({ type: '@@SURVEY/REMOVE_SURVEY_FAIL' });
   }
 };
 
-export const clearNewSurveyId = (): ThunkAction => (dispatch: Dispatch) => {
-  dispatch({ type: '@@SURVEY/CLEAR_NEW_SURVEY_ID' });
-};
+export const clearNewSurveyId = (): ThunkAction => (dispatch: Dispatch) => (
+  dispatch({ type: '@@SURVEY/CLEAR_NEW_SURVEY_ID' })
+);
 
 export const getSurveyList = (): ThunkAction => (dispatch: Dispatch, getState: GetState) => {
   try {

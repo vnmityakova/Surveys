@@ -4,13 +4,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import type { Connector } from 'react-redux';
-import NotFound from '../components/NotFound';
 import {
   APP_ROOT,
   ABOUT_PATH,
   SURVEY_LIST,
   EDIT_SURVEY_WITH_ID,
-  PASS_SURVEY,
+  PASS_SURVEY_WITH_ID,
 } from '../constants/routes';
 import type { State, Dispatch } from '../types';
 import type {
@@ -21,7 +20,6 @@ import Login from '../components/Login';
 import { reloginUser } from "../actions/survey";
 import About from '../components/About';
 import SurveyList from './SurveyList';
-// import '../assets/css/bootstrap.css';
 import '../assets/css/app.scss';
 import HeaderMenu from '../components/HeaderMenu';
 import PassSurvey from '../components/surveyPass/PassSurvey';
@@ -61,41 +59,29 @@ class Layout extends Component {
             <Route
               exact
               path={APP_ROOT}
-              render={() => {
-                return (
-                  <Redirect to={{pathname: ABOUT_PATH}}/>
-                );
-              }}
+              render={() => <Redirect to={{pathname: ABOUT_PATH}}/> }
             />
             {this.props.isAuthChecked && <Route
               path={EDIT_SURVEY_WITH_ID}
-              render={() => {
-                return (
+              render={() => (
                   this.props.user ? <EditSurvey /> :
                     <Redirect to={{pathname: ABOUT_PATH}}/>
-                );
-              }}
+                )}
             />}
             {this.props.isAuthChecked && <Route
               path={SURVEY_LIST}
-              render={() => {
-                return (
+              render={() => (
                   this.props.user ? <SurveyList /> :
                     <Redirect to={{pathname: ABOUT_PATH}}/>
-                );
-              }}
+                )}
             />}
             {<Route
-              path={PASS_SURVEY}
+              path={PASS_SURVEY_WITH_ID}
               render={() => <PassSurvey />}
             />}
             {<Route
               path={ABOUT_PATH}
-              render={() => {
-                return (
-                  <About />
-                );
-              }}
+              render={() => <About />}
             />}
             {/*<Route component={NotFound} />*/}
           </Switch>
@@ -105,18 +91,18 @@ class Layout extends Component {
   }
 }
 
-const mapStateToProps = (state: State): StateProps => {
-  return {
+const mapStateToProps = (state: State): StateProps => (
+  {
     user: state.layout.user,
     isAuthChecked: state.layout.isAuthChecked,
-  };
-};
+  }
+)
 
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
-  return {
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => (
+  {
     reloginUser: () => dispatch(reloginUser()),
-  };
-};
+  }
+)
 
 const connector: Connector<OwnProps, Props> = connect(mapStateToProps, mapDispatchToProps);
 export default withRouter(connector(Layout));

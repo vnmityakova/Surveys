@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom';
 import 'react-select/dist/react-select.css';
 import { connect, Connector } from 'react-redux';
 import type { Dispatch, State } from '../../types';
+import {getSurveyDataById} from "../../actions/surveyPass";
+import QuestionsList from "./QuestionsList";
 
 type OwnProps = {
   match: Object,
@@ -13,7 +15,7 @@ type OwnProps = {
 };
 
 type DispatchProps = {
-
+  getSurveyDataById: Function,
 };
 
 type Props = OwnProps & DispatchProps;
@@ -22,14 +24,14 @@ class PassSurvey extends Component {
   props: Props;
 
   componentWillMount() {
-
+    this.props.getSurveyDataById(this.props.match.params.id);
   }
 
   render() {
-    // const { surveyParams, match } = this.props;
     return (
       <div className="passSurvey">
-        Прохождение теста
+        <h3>{this.props.surveyParams.title}</h3>
+        <QuestionsList questions={this.props.questions} />
       </div>
     );
   }
@@ -42,7 +44,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-
+  getSurveyDataById: surveyId => dispatch(getSurveyDataById(surveyId)),
 });
 
 const connector: Connector<{}, Props> = connect(mapStateToProps, mapDispatchToProps);

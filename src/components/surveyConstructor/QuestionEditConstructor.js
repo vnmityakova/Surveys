@@ -18,14 +18,14 @@ class QuestionEditConstructor extends Component {
   constructor(props: Props) {
     super(props);
     const { selectedQuestionType } = props;
-    this.el = this.getHOC(selectedQuestionType);
+    this.el = this.getComponent(selectedQuestionType);
   }
 
   componentWillReceiveProps(nextProps: Props) {
     const { selectedQuestionType } = nextProps;
 
     if (this.props.selectedQuestionType !== selectedQuestionType) {
-      this.el = this.getHOC(selectedQuestionType);
+      this.el = this.getComponent(selectedQuestionType);
     }
   }
 
@@ -33,7 +33,7 @@ class QuestionEditConstructor extends Component {
     return <div className="top10 questionEditConstructor"><this.el /></div>;
   }
 
-  getHOC = (selectedQuestionType) => {
+  getComponent = (selectedQuestionType) => {
     let el = null;
     if (selectedQuestionType === 'text') {
       el = TextQuestionEdit;

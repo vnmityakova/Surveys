@@ -1,8 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import Select from 'react-select';
-import { Button } from 'react-toolbox/lib/button';
+import { Link } from 'react-router-dom';
 import type { SurveyParamsType } from '../../types/layout';
+import { PASS_SURVEY } from '../../constants/routes';
 
 type Props = {
   surveyParams: SurveyParamsType,
@@ -39,7 +40,9 @@ class SurveyParamsBlock extends Component {
               className="hoverInput"
             />
           </div>
-          <Button label="Просмотреть" raised className="col" />
+          <Link to={`${PASS_SURVEY}/${this.props.surveyId}`} className="previewLink" target="_blank">
+            Просмотреть
+          </Link>
         </div>
 
         <div className="row">

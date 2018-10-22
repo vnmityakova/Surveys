@@ -1,5 +1,7 @@
 import React from 'react';
 
-const About = () => <div>Страничка с описанием</div>;
+const About = () => <div>
+  Сервис для создания опросов. Для прохождения опроса необходимо скинуть его ссылку пользователю.
+</div>;
 
 export default About;

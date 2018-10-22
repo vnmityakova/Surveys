@@ -20,7 +20,7 @@ const SurveyLink = (props: Props) => {
     props.removeSurvey(item.id);
   };
 
-  return ( // TODO 'li' in 'a' is not good
+  return (
     <li key={item.id} className="surveyItem">
       <Link to={`${EDIT_SURVEY}/${item.id}`} className="titleBlock">
         {item.title}
