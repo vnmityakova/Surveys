@@ -28,10 +28,11 @@ class PassSurvey extends Component {
   }
 
   render() {
+    const { surveyParams, questions } = this.props;
     return (
       <div className="passSurvey">
-        <h3>{this.props.surveyParams.title}</h3>
-        <QuestionsList questions={this.props.questions} />
+        <h3>{surveyParams.title}</h3>
+        <QuestionsList questions={questions} />
       </div>
     );
   }

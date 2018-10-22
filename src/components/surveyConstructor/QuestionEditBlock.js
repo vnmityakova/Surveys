@@ -60,9 +60,9 @@ class QuestionEditBlock extends Component {
     );
   }
 
-  handleChange = (e) => {
+  handleChange = ({ target: { value } }) => {
     this.props.onChangeQuestion(this.props.editingQuestion.id, { // TODO раз 1 за раз редактируется, то и props не нужен
-      question: e.target.value,
+      question: value,
     });
   };
 

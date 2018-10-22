@@ -39,8 +39,9 @@ class EditSurvey extends Component {
   props: Props;
 
   componentWillMount() {
-    this.props.getSurveyDataById(this.props.match.params.id);
-    this.props.setEditSurveyId(this.props.match.params.id);
+    const id = this.props.match.params.id;
+    this.props.getSurveyDataById(id);
+    this.props.setEditSurveyId(id);
     this.props.clearNewSurveyId();
   }
 

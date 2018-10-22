@@ -26,9 +26,7 @@ class QuestionViewerCommon extends Component {
     this.props.removeQuestion(questionId, this.props.surveyId);
   };
 
-  handleEdit = () => {
-    this.props.setIsEdit();
-  };
+  handleEdit = () => this.props.setIsEdit();
 
   render() {
     const { item, isEditButtonDisabled } = this.props;

@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 type Props = {
   // saveQuestion: Function,
@@ -18,7 +18,7 @@ class TextQuestionEdit extends Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <input
           type="text"
           name="answer"
@@ -29,7 +29,7 @@ class TextQuestionEdit extends Component {
         <br />
         {/* <Button className="top10" label="Сохранить вопрос" raised onClick={this.handleSaveQuestion} />
         <Button className="top10" label="Отменить" raised /> */}
-      </div>
+      </Fragment>
     );
   }
 

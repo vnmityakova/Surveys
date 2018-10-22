@@ -37,13 +37,10 @@ class CheckboxItem extends Component {
     );
   }
 
-  handleChangeAnswerText = (e) => {
-    this.props.changeAnswer(this.props.id, e.target.value);
-  };
+  handleChangeAnswerText = ({ currentTarget: { value } }) =>
+    this.props.changeAnswer(this.props.id, value);
 
-  handleRemoveAnswer = () => {
-    this.props.removeItem(this.props.id);
-  }
+  handleRemoveAnswer = () => this.props.removeItem(this.props.id);
 
 }
 

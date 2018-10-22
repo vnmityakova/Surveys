@@ -44,13 +44,13 @@ class QuestionViewBlock extends Component {
     );
   }
 
-  handleRemove = () => {
-    const questionId = this.props.item.id;
-    this.props.onRemoveQuestion(questionId, this.props.match.params.id);
-  };
+  handleRemove = () => (
+    this.props.onRemoveQuestion(this.props.item.id, this.props.match.params.id)
+  );
 
   handleEdit = () => {
-    this.props.onChangeQuestion(this.props.item.id, this.props.item);
+    const { item } = this.props;
+    this.props.onChangeQuestion(item.id, item);
   };
 
   getQuestionViewerChild = () => {

@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import type { SurveyParamsType } from '../../types/layout';
@@ -28,7 +28,7 @@ class SurveyParamsBlock extends Component {
     const { surveyName, questionsPerPage } = this.state;
     const { surveyParams } = this.props;
     return (
-      <div>
+      <Fragment>
         <div className="row">
           <div className="surveyName col">
             <input
@@ -62,15 +62,15 @@ class SurveyParamsBlock extends Component {
             ]}
           />
         </div>
-      </div>
+      </Fragment>
     );
   }
 
-  handleNameChange = (e) => {
+  handleNameChange = ({ target: { name, value } }) => {
     this.setState({
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
-    this.props.changeSurveyTitle(this.props.surveyId, e.target.value);
+    this.props.changeSurveyTitle(this.props.surveyId, value);
   };
 
   handlePageQuestionsNumberSelect = (valueObj) => {

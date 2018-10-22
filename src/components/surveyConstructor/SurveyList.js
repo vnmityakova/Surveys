@@ -30,9 +30,9 @@ class SurveyList extends Component {
   }
 
   componentWillReceiveProps(nextProps: Props) {
-    if (nextProps.newSurveyId.length) {
-      this.props.history.push(`/surveys/edit/${nextProps.newSurveyId}`);
-      // TODO можно ли сюда перенести clearNewSurveyId()?
+    const { newSurveyId } = nextProps;
+    if (newSurveyId.length) {
+      this.props.history.push(`/surveys/edit/${newSurveyId}`);
     }
   }
 

@@ -58,11 +58,10 @@ class Login extends Component { // eslint-disable-line
 
 }
 
-const mapStateToProps = (state: State) => {
-  return {
-    user: state.layout.user,
-  };
-};
+const mapStateToProps = (state: State) => ({
+  user: state.layout.user,
+});
+
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {

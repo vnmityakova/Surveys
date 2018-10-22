@@ -36,9 +36,9 @@ class QuestionAddBlock extends Component {
     );
   }
 
-  handleChange = (e) => {
+  handleChange = ({ target: { name, value } }) => {
     this.setState({
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
